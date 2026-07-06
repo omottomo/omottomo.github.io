@@ -1,0 +1,107 @@
+---
+import Section from './Section.astro';
+import { projects, placeholderSlots } from '../data/projects';
+
+const hasProjects = projects.length > 0;
+const par = ['Problem', 'Approach', 'Result'];
+---
+
+<Section
+  id="projects"
+  title="프로젝트"
+  subtitle="Problem · Approach · Result 3단으로 정리합니다. 공개 검증 가능한 결과물을 준비 중입니다."
+>
+  {
+    hasProjects ? (
+      <div class="grid gap-px border border-rule-strong bg-rule-strong md:grid-cols-2">
+        {projects.map((p, idx) => (
+          <article class="flex flex-col bg-paper p-6">
+            <div class="flex items-baseline justify-between gap-3">
+              <span class="font-mono text-xs tracking-widest text-faint">
+                PRJ.0{idx + 1}
+              </span>
+            </div>
+            <h3 class="mt-2 font-display text-xl font-bold tracking-tight text-ink">
+              {p.title}
+            </h3>
+            <p class="mt-1 text-sm text-muted">{p.tagline}</p>
+            <dl class="mt-5 space-y-4 border-t border-rule pt-4 text-sm">
+              <div>
+                <dt class="font-mono text-xs uppercase tracking-widest text-faint">
+                  Problem
+                </dt>
+                <dd class="mt-1 leading-relaxed text-ink-soft">{p.problem}</dd>
+              </div>
+              <div>
+                <dt class="font-mono text-xs uppercase tracking-widest text-faint">
+                  Approach
+                </dt>
+                <dd class="mt-1 leading-relaxed text-ink-soft">{p.approach}</dd>
+              </div>
+              <div>
+                <dt class="font-mono text-xs uppercase tracking-widest text-faint">
+                  Result
+                </dt>
+                <dd class="mt-1 leading-relaxed text-ink-soft">{p.result}</dd>
+              </div>
+            </dl>
+            <p class="mt-5 font-mono text-xs leading-relaxed text-muted">
+              <span class="text-faint">STACK — </span>
+              {p.tech.join('  ·  ')}
+            </p>
+            {p.links && p.links.length > 0 && (
+              <div class="mt-5 flex flex-wrap gap-4">
+                {p.links.map((l) => (
+                  <a
+                    href={l.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="link-accent font-mono text-sm"
+                  >
+                    {l.label} →
+                  </a>
+                ))}
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div>
+        <div class="grid gap-px border border-rule-strong bg-rule-strong md:grid-cols-2">
+          {Array.from({ length: placeholderSlots }).map((_, idx) => (
+            <div class="bg-paper p-6" aria-hidden="true">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-xs tracking-widest text-faint">
+                  PRJ.0{idx + 1}
+                </span>
+                <span class="border border-dashed border-rule-strong px-2 py-0.5 font-mono text-xs uppercase tracking-widest text-faint">
+                  준비 중
+                </span>
+              </div>
+              <div class="mt-6 space-y-4 border-t border-rule pt-4">
+                {par.map((k) => (
+                  <div>
+                    <div class="font-mono text-xs uppercase tracking-widest text-faint">
+                      {k}
+                    </div>
+                    <div class="mt-1.5 space-y-1.5">
+                      <span class="block h-2.5 w-full bg-well" />
+                      <span class="block h-2.5 w-4/5 bg-well" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <p class="mt-6 max-w-2xl font-mono text-sm leading-relaxed text-muted">
+          현재 CI/CD 롤백 데모를 별도로 제작 중이며, 완성되는 대로 이 자리에
+          <span class="text-ink-soft"> Problem · Approach · Result</span> 원장으로
+          공개합니다.
+        </p>
+      </div>
+    )
+  }
+</Section>

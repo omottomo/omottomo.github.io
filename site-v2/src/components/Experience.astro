@@ -1,0 +1,58 @@
+---
+import Section from './Section.astro';
+import { experiences } from '../data/experience';
+---
+
+<Section
+  id="experience"
+  title="경력"
+  subtitle="빌드·배포를 무인화해 온 여정."
+>
+  <div class="space-y-14">
+    {
+      experiences.map((exp) => (
+        <article>
+          <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <h3 class="font-display text-2xl font-bold tracking-tight text-ink">
+              {exp.role}
+            </h3>
+            <span class="font-mono text-sm tabular-nums text-muted">
+              {exp.period}
+            </span>
+          </div>
+
+          <div class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1">
+            <span class="font-medium text-ink-soft">{exp.company}</span>
+            {exp.active && (
+              <span class="font-mono text-xs uppercase tracking-widest text-build-ink">
+                <span aria-hidden="true">●</span> 재직 중
+              </span>
+            )}
+          </div>
+
+          {exp.subtitle && (
+            <p class="mt-3 text-sm text-muted">{exp.subtitle}</p>
+          )}
+
+          {/* 하이라이트 — 번호 매긴 괘선 행(원장 조판) */}
+          <ul class="mt-6 border-t border-rule">
+            {exp.highlights.map((h, i) => (
+              <li class="grid grid-cols-[2.25rem_1fr] gap-3 border-b border-rule py-3.5 leading-relaxed text-ink-soft">
+                <span class="font-mono text-xs tabular-nums text-faint">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span>{h}</span>
+              </li>
+            ))}
+          </ul>
+
+          {/* tech — chip 아님, 인라인 mono */}
+          <p class="mt-5 font-mono text-xs leading-relaxed text-muted">
+            <span class="text-faint">STACK — </span>
+            {exp.tech.join('  ·  ')}
+          </p>
+        </article>
+      ))
+    }
+  </div>
+</Section>

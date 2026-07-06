@@ -1,0 +1,265 @@
+---
+import '../styles/global.css';
+import { site, hasResume } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** OG 이미지 (public/ 기준 절대경로). 기본: /og-image.png */
+  image?: string;
+}
+
+const {
+  title = '이동욱 — DevOps 엔지니어',
+  description = '파이프라인을 무인 자동화해 빌드 시간을 75% 줄이는 DevOps 엔지니어 이동욱의 포트폴리오.',
+  image = '/og-image.png',
+} = Astro.props;
+
+const canonicalURL = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site)
+  : undefined;
+const ogImageURL = Astro.site ? new URL(image, Astro.site) : undefined;
+
+// 섹션 목차 내비게이션.
+const nav = [
+  { href: '#about', label: 'About' },
+  { href: '#experience', label: 'Experience' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#certifications', label: 'Certs' },
+  { href: '#education', label: 'Education' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#contact', label: 'Contact' },
+];
+
+const year = 2026;
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- 저장된 테마 선호를 첫 페인트 전에 반영(FOUC 방지). 미설정 시 CSS 미디어쿼리가 시스템 선호를 따른다. -->
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t === 'dark' || t === 'light') {
+            document.documentElement.dataset.theme = t;
+          }
+        } catch (e) {}
+      })();
+    </script>
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {canonicalURL && <link rel="canonical" href={canonicalURL.href} />}
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="ko_KR" />
+    {canonicalURL && <meta property="og:url" content={canonicalURL.href} />}
+    {ogImageURL && <meta property="og:image" content={ogImageURL.href} />}
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {ogImageURL && <meta name="twitter:image" content={ogImageURL.href} />}
+
+    <!-- 폰트: Pretendard(본문·한글) · Bricolage Grotesque(라틴 디스플레이) · JetBrains Mono(라벨·숫자) -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="min-h-screen antialiased">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-ink focus:px-4 focus:py-2 focus:font-mono focus:text-sm focus:text-paper"
+    >
+      본문으로 건너뛰기
+    </a>
+
+    <!-- 마스트헤드 — 번호 인덱스 네비 (glass/pill 아님: 솔리드 페이퍼 + 헤어라인) -->
+    <header
+      class="sticky top-0 z-40 border-b border-rule bg-paper"
+    >
+      <nav
+        class="mx-auto flex h-14 max-w-6xl items-center justify-between gap-6 px-5 sm:px-8"
+        aria-label="주요 내비게이션"
+      >
+        <a href="#top" class="group flex items-baseline gap-2">
+          <span class="font-display text-lg font-extrabold tracking-tight text-ink">
+            Lee Dong Wook
+          </span>
+        </a>
+
+        <div class="flex items-center gap-4 md:gap-6">
+          <ul class="hidden items-center gap-4 md:flex lg:gap-6">
+            {
+              nav.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    class="group inline-flex items-baseline font-mono text-xs text-muted transition-colors hover:text-ink"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+
+          <a
+            href={hasResume ? site.resumeUrl : '#contact'}
+            class="font-mono text-xs uppercase tracking-widest text-ink underline decoration-accent decoration-2 underline-offset-4 md:hidden"
+          >
+            {hasResume ? '이력서' : '연락'}
+          </a>
+
+          <!-- 테마 토글 (해/달) — 라운드 0 ruled 스퀘어 버튼 -->
+          <button
+            id="theme-toggle"
+            type="button"
+            aria-label="다크 모드로 전환"
+            class="inline-flex h-8 w-8 items-center justify-center border border-rule text-ink transition-colors hover:border-ink"
+          >
+            <svg
+              class="icon-light h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="4"></circle>
+              <path
+                d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
+              ></path>
+            </svg>
+            <svg
+              class="icon-dark h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>
+            </svg>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <!-- 콜로폰 푸터 -->
+    <footer class="border-t border-rule-strong">
+      <div class="mx-auto max-w-6xl px-5 py-12 sm:px-8">
+        <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p class="font-display text-lg font-bold tracking-tight text-ink">
+              이동욱
+            </p>
+            <p class="mt-1 font-mono text-xs uppercase tracking-widest text-muted">
+              DevOps Engineer
+            </p>
+            <p class="mt-4 font-mono text-sm text-ink-soft">
+              <a href={`mailto:${site.email}`} class="link-accent">{site.email}</a>
+              <span class="mx-2 text-rule-strong">/</span>
+              <a
+                href={site.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="link-accent">@{site.githubHandle}</a
+              >
+            </p>
+          </div>
+
+          <div class="font-mono text-[0.7rem] leading-relaxed tracking-wide text-faint md:text-right">
+            <p>SET IN BRICOLAGE GROTESQUE · JETBRAINS MONO · PRETENDARD</p>
+            <p class="mt-1">
+              © {year} 이동욱 · BUILT WITH ASTRO · DEPLOYED VIA GITHUB ACTIONS → PAGES
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- 스크롤 리빌 + 괘선 draw-in (절제된 모션). prefers-reduced-motion 시 즉시 표시. -->
+    <script>
+      const prefersReduced = window.matchMedia(
+        '(prefers-reduced-motion: reduce)',
+      ).matches;
+      const targets = document.querySelectorAll<HTMLElement>('.reveal, .rule-draw');
+
+      if (prefersReduced || !('IntersectionObserver' in window)) {
+        targets.forEach((el) => el.classList.add('is-visible'));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.05 },
+        );
+        targets.forEach((el) => io.observe(el));
+      }
+    </script>
+
+    <!-- 테마 토글: 클릭 시 light/dark 전환 + localStorage 저장. 시스템 선호 기본. -->
+    <script>
+      const themeBtn = document.getElementById('theme-toggle');
+      if (themeBtn) {
+        const sys = window.matchMedia('(prefers-color-scheme: dark)');
+        const currentTheme = () =>
+          document.documentElement.dataset.theme ||
+          (sys.matches ? 'dark' : 'light');
+        const syncLabel = () => {
+          const dark = currentTheme() === 'dark';
+          themeBtn.setAttribute('aria-pressed', String(dark));
+          themeBtn.setAttribute(
+            'aria-label',
+            dark ? '라이트 모드로 전환' : '다크 모드로 전환',
+          );
+        };
+        syncLabel();
+        themeBtn.addEventListener('click', () => {
+          const next = currentTheme() === 'dark' ? 'light' : 'dark';
+          document.documentElement.dataset.theme = next;
+          try {
+            localStorage.setItem('theme', next);
+          } catch (e) {}
+          syncLabel();
+        });
+        // 수동 오버라이드가 없을 때 시스템 선호 변경을 라벨에 반영
+        sys.addEventListener('change', syncLabel);
+      }
+    </script>
+  </body>
+</html>

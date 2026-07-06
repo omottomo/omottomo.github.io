@@ -1,0 +1,211 @@
+@import "tailwindcss";
+
+/*
+  ── LEDGER//GRID 디자인 시스템 ─────────────────────────────────────────────
+  잉크 온 페이퍼 에디토리얼 원장(ledger). 레퍼런스(shiniseong)의 다크·인디고·
+  글래스 DNA를 항목별로 반전한다: 따뜻한 페이퍼 배경 + 웜 잉크 모노크롬 +
+  헤어라인 괘선(카드/blur/블롭 대체) + 단일 버밀리언 악센트(아주 드물게) +
+  CI passing을 뜻하는 build-green 의미색. 타이포가 주인공(Bricolage / JetBrains
+  Mono / Pretendard). radius 0·blur 0·유일 그림자는 하드 오프셋.
+  Tailwind v4: @theme 의 --color- 토큰은 bg / text / border 유틸로, --font- 은
+  font- 유틸로, --shadow- 는 shadow- 유틸로 노출된다.
+*/
+@theme {
+  /* 폰트 3역: 디스플레이(Bricolage) · 본문/한글(Pretendard) · 라벨·숫자(JetBrains Mono) */
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    system-ui, "Segoe UI", Roboto, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-display: "Bricolage Grotesque", var(--font-sans);
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* ── 표면 (라이트 "paper" 기본, 블루 계열 전면 배제) ── */
+  --color-paper: #f4f2ea;        /* 페이지 배경 */
+  --color-paper-soft: #ece9de;   /* 교대 섹션 배경 */
+  --color-panel: #fbf9f2;        /* 드물게 쓰는 raised 인덱스 블록 */
+  --color-well: #e6e2d5;         /* sunken(코드/스켈레톤) 블록 */
+
+  /* ── 잉크 (웜 니어블랙 모노크롬) ── */
+  --color-ink: #17150f;          /* 제목·본문, 대비 ~15:1 (AAA) */
+  --color-ink-soft: #45423a;     /* 부제 */
+  --color-muted: #625f58;        /* 라벨·메타 (소형 본문 AA ~5:1) */
+  --color-faint: #86837b;        /* 대형/캡션 전용 (소형 텍스트 금지) */
+
+  /* ── 괘선 ── */
+  --color-rule: #d7d3c7;         /* 헤어라인 1px */
+  --color-rule-strong: #c6c1b2;  /* 그리드 컬럼선·강한 보더·거대 번호 */
+
+  /* ── 단일 시그널 악센트 = 버밀리언 (링크 밑줄·활성 인덱스·번호 사각·hero 1단어에만) ── */
+  --color-accent: #d8341c;       /* 채움/대형/밑줄 */
+  --color-accent-ink: #b02a13;   /* 페이퍼 위 소형 텍스트/링크 (AA ~6.5:1) */
+
+  /* ── 의미색(장식 아님) = build-green : CI 성공·성과 델타▼·passing tick 에만 ── */
+  --color-build: #1e7d45;        /* 대형/볼드 델타 */
+  --color-build-ink: #146a38;    /* 소형 텍스트 AA ~5.8:1 */
+
+  /* 유일 그림자 = 제로-블러 하드 오프셋 (CTA·NCP 배지에만 선택 적용) */
+  --shadow-hard: 4px 4px 0 0 var(--color-ink);
+  --shadow-hard-accent: 4px 4px 0 0 var(--color-accent);
+}
+
+:root {
+  color-scheme: light;
+}
+
+/*
+  ── DARK 모드 ──────────────────────────────────────────────────────────────
+  중성 웜-카본(near-black 아님, 블루끼 0 — 레퍼런스 #0a0b12와도 다름).
+  시스템 선호가 기본, data-theme 속성으로 수동 오버라이드.
+  --color-* 토큰만 스왑하면 모든 Tailwind 유틸리티가 자동 반영된다.
+  (light 값은 @theme 에 있으므로 여기선 dark 값만 정의)
+*/
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --color-paper: #14130f;
+    --color-paper-soft: #1b1a15;
+    --color-panel: #1f1d18;
+    --color-well: #211f19;
+    --color-ink: #edeae0;
+    --color-ink-soft: #c3bfb2;
+    --color-muted: #928d80;
+    --color-faint: #6f6b60;
+    --color-rule: #2c2a24;
+    --color-rule-strong: #3a382f;
+    --color-accent: #f0492f;
+    --color-accent-ink: #f0492f;
+    --color-build: #35c27a;
+    --color-build-ink: #35c27a;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-paper: #14130f;
+  --color-paper-soft: #1b1a15;
+  --color-panel: #1f1d18;
+  --color-well: #211f19;
+  --color-ink: #edeae0;
+  --color-ink-soft: #c3bfb2;
+  --color-muted: #928d80;
+  --color-faint: #6f6b60;
+  --color-rule: #2c2a24;
+  --color-rule-strong: #3a382f;
+  --color-accent: #f0492f;
+  --color-accent-ink: #f0492f;
+  --color-build: #35c27a;
+  --color-build-ink: #35c27a;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem; /* sticky 마스트헤드 높이만큼 앵커 오프셋 */
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1;
+}
+
+/* 라틴 디스플레이/모노는 라이닝·태뷸러 숫자로 정렬(원장 조판) */
+.font-display,
+.font-mono {
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+/* 본문 링크: 색 폭발 없이 밑줄이 슬라이드 인 (background-size 트릭) */
+.link {
+  color: var(--color-ink);
+  text-decoration: none;
+  background-image: linear-gradient(var(--color-accent), var(--color-accent));
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 1px;
+  transition: background-size 0.25s ease, color 0.2s ease;
+  padding-bottom: 1px;
+}
+.link:hover {
+  background-size: 100% 2px;
+}
+
+/* 인라인 강조 링크(작은 텍스트) — AA 확보용 어두운 버밀리언, hover 시 밑줄 확장 */
+.link-accent {
+  color: var(--color-accent-ink);
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0 1px;
+  transition: background-size 0.25s ease;
+}
+.link-accent:hover {
+  background-size: 100% 1px;
+}
+
+/* 버밀리언 틱 — 활성 인덱스·라벨 옆 작은 사각 (악센트를 아주 드물게) */
+.tick::before {
+  content: "";
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: 0.5rem;
+  background: var(--color-accent);
+  vertical-align: 0.04em;
+}
+
+/* 스크롤 리빌 — 절제된 rise+fade. JS가 .is-visible 부여. 커서/블롭/그라디언트 없음. */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* 헤어라인 괘선 draw-in (섹션 상단) — 없어도 성립하는 progressive enhancement */
+.rule-draw {
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.rule-draw.is-visible {
+  transform: scaleX(1);
+}
+
+/* 접근성: 모션 최소화 선호 시 전부 정적 */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .rule-draw { transform: none; transition: none; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* 포커스 가시성 — 악센트 아웃라인 */
+:where(a, button):focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* 선택 영역도 잉크 온 페이퍼 톤 유지 */
+::selection {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+/* 테마 토글 아이콘 — 현재 활성 테마 아이콘만 표시 (해·달) */
+.icon-dark { display: none; }
+.icon-light { display: inline-block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .icon-light { display: none; }
+  :root:not([data-theme="light"]) .icon-dark { display: inline-block; }
+}
+:root[data-theme="dark"] .icon-light { display: none; }
+:root[data-theme="dark"] .icon-dark { display: inline-block; }

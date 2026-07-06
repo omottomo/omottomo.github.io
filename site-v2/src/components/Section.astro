@@ -1,0 +1,33 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  subtitle?: string;
+  /** 교대 배경(paper-soft)으로 섹션 리듬 */
+  alt?: boolean;
+}
+const { id, title, subtitle, alt = false } = Astro.props;
+---
+
+<section id={id} class:list={['scroll-mt-16', alt && 'bg-paper-soft']}>
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <!-- 지면을 가르는 헤어라인 괘선 (스크롤 시 draw-in) -->
+    <div class="rule-draw h-px w-full origin-left bg-rule-strong" aria-hidden="true"></div>
+
+    <div class="reveal py-16 md:py-24">
+      <h2
+        class="font-display text-3xl font-bold leading-[1.1] tracking-tight text-ink sm:text-4xl"
+      >
+        {title}
+      </h2>
+      {
+        subtitle && (
+          <p class="mt-4 max-w-2xl leading-relaxed text-ink-soft">{subtitle}</p>
+        )
+      }
+      <div class="mt-10">
+        <slot />
+      </div>
+    </div>
+  </div>
+</section>

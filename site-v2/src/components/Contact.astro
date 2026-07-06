@@ -1,0 +1,73 @@
+---
+import Section from './Section.astro';
+import { site, hasResume } from '../data/site';
+
+const channels = [
+  {
+    kicker: 'Email',
+    label: '이메일',
+    value: site.email,
+    href: `mailto:${site.email}`,
+    external: false,
+  },
+  {
+    kicker: 'GitHub',
+    label: 'GitHub',
+    value: `@${site.githubHandle}`,
+    href: site.githubUrl,
+    external: true,
+  },
+];
+---
+
+<Section
+  id="contact"
+  title="함께 일하고 싶으시다면"
+  subtitle="새로운 기회와 협업에 열려 있습니다. 편한 채널로 연락 주세요."
+>
+  <div class="border-t border-rule-strong">
+    {
+      channels.map((c) => (
+        <a
+          href={c.href}
+          target={c.external ? '_blank' : undefined}
+          rel={c.external ? 'noopener noreferrer' : undefined}
+          class="group grid grid-cols-1 gap-1 border-b border-rule py-6 sm:grid-cols-[8rem_1fr_auto] sm:items-baseline sm:gap-6"
+        >
+          <span class="font-mono text-xs uppercase tracking-widest text-faint">
+            {c.kicker}
+          </span>
+          <span class="font-display text-lg font-bold text-ink">{c.label}</span>
+          <span class="break-all font-mono text-sm text-muted transition-colors group-hover:text-accent-ink group-hover:underline group-hover:decoration-accent group-hover:decoration-2 group-hover:underline-offset-4">
+            {c.value} →
+          </span>
+        </a>
+      ))
+    }
+
+    {
+      hasResume ? (
+        <a
+          href={site.resumeUrl}
+          class="group grid grid-cols-1 gap-1 border-b border-rule py-6 sm:grid-cols-[8rem_1fr_auto] sm:items-baseline sm:gap-6"
+        >
+          <span class="font-mono text-xs uppercase tracking-widest text-faint">
+            Resume
+          </span>
+          <span class="font-display text-lg font-bold text-ink">이력서</span>
+          <span class="font-mono text-sm text-muted transition-colors group-hover:text-accent-ink group-hover:underline group-hover:decoration-accent group-hover:decoration-2 group-hover:underline-offset-4">
+            PDF 다운로드 →
+          </span>
+        </a>
+      ) : (
+        <div class="grid grid-cols-1 gap-1 border-b border-rule py-6 opacity-70 sm:grid-cols-[8rem_1fr_auto] sm:items-baseline sm:gap-6">
+          <span class="font-mono text-xs uppercase tracking-widest text-faint">
+            Resume
+          </span>
+          <span class="font-display text-lg font-bold text-ink-soft">이력서</span>
+          <span class="font-mono text-sm text-faint">준비 중</span>
+        </div>
+      )
+    }
+  </div>
+</Section>

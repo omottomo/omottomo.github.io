@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="이동욱 포트폴리오">
+  <!-- Ledger 마크: 페이퍼 위 괘선(원장) + 버밀리언 틱 -->
+  <rect width="64" height="64" rx="10" fill="#f4f2ea"/>
+  <rect x="1.5" y="1.5" width="61" height="61" rx="8.5" fill="none" stroke="#c6c1b2" stroke-width="2"/>
+  <rect x="14" y="18" width="36" height="4" fill="#17150f"/>
+  <rect x="14" y="30" width="36" height="4" fill="#17150f"/>
+  <rect x="14" y="42" width="20" height="4" fill="#17150f"/>
+  <rect x="40" y="40" width="10" height="10" fill="#d8341c"/>
+</svg>

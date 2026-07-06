@@ -1,0 +1,37 @@
+---
+import Section from './Section.astro';
+import { skillGroups } from '../data/skills';
+---
+
+<Section
+  id="skills"
+  title="기술 스택"
+  subtitle="빌드·배포 파이프라인을 무인화하는 데 필요한 기술을 깊이 있게 다룹니다. 진하게 표시된 항목이 핵심 역량입니다."
+>
+  <dl class="border-t border-rule-strong">
+    {
+      skillGroups.map((group) => (
+        <div class="grid gap-2 border-b border-rule py-5 md:grid-cols-[13rem_1fr] md:gap-8">
+          <dt class="font-mono text-xs uppercase tracking-widest text-muted">
+            {group.category}
+          </dt>
+          <dd class="flex flex-wrap gap-x-6 gap-y-2">
+            {group.items.map((item) => (
+              <span
+                title={item.note}
+                class:list={[
+                  'cursor-default',
+                  item.highlighted
+                    ? 'font-semibold text-ink underline decoration-rule-strong decoration-1 underline-offset-4'
+                    : 'text-muted',
+                ]}
+              >
+                {item.name}
+              </span>
+            ))}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+</Section>

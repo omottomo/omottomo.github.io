@@ -1,0 +1,26 @@
+{
+  "name": "portfolio-site",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev --root site-v2 --port 4322",
+    "build": "astro build --root site-v2",
+    "preview": "astro preview --root site-v2 --port 4322",
+    "check": "astro check --root site-v2",
+    "astro": "astro",
+    "second": "astro dev --root site-v2 --port 4322",
+    "second:build": "astro build --root site-v2",
+    "second:preview": "astro preview --root site-v2 --port 4322"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.2",
+    "astro": "^5.18.2",
+    "tailwindcss": "^4.3.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@types/node": "^26.1.0",
+    "typescript": "^5.9.3"
+  }
+}

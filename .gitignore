@@ -1,0 +1,26 @@
+# build output
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# 비밀정보 — 절대 커밋 금지 (CLAUDE.md §0)
+.env
+.env.*
+*.key
+*.pem
+
+# logs / os
+npm-debug.log*
+.DS_Store
+
+# editor
+.vscode/
+.idea/
+
+# 내부 계획/전략 문서 — 공개 저장소에 포함 금지.
+# 익명화 이전의 원본 맥락이 담겨 있어 공개 대상이 아니다. 로컬에는 유지하되 published repo에서만 제외.
+/PLAN.md
+/CLAUDE.md
+/docs/
