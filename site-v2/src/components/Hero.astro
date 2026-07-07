@@ -14,11 +14,11 @@ const currentPeriod = current.period.replace('재직 중', '현재');
   <span id="top" class="sr-only"></span>
 
   <div class="mx-auto max-w-6xl px-5 pb-16 pt-14 sm:px-8 sm:pb-24 sm:pt-24">
-    <div class="grid grid-cols-1 gap-x-10 gap-y-12 lg:grid-cols-[1.7fr_1fr]">
-      <!-- 좌: 인트로 — 아이브로 · 태그라인 · 이름 · 리드 · 메타 -->
+    <div class="grid grid-cols-1 gap-x-10 gap-y-12 lg:grid-cols-[2fr_1fr]">
+      <!-- 좌: 인트로 — 태그라인 · 이름 · 리드 · CTA (버튼은 등폭 그리드로 가로 일렬) -->
       <div>
         <p class="font-display text-2xl leading-snug text-faint sm:text-[1.75rem]">
-          손이 아니라 파이프라인이 일하게 만듭니다.
+          DevOps Engineer
         </p>
 
         <h1
@@ -28,26 +28,18 @@ const currentPeriod = current.period.replace('재직 중', '현재');
         </h1>
 
         <p class="mt-8 max-w-xl text-base leading-relaxed text-ink-soft sm:text-lg">
-          반복 작업을 <strong class="font-semibold text-ink">파이프라인</strong>으로 옮겨,
-          사람의 손이 아니라 <strong class="font-semibold text-ink">시스템이 일하게</strong>
-          만드는 <strong class="font-semibold text-ink">DevOps 엔지니어</strong>입니다.
+          <strong class="font-semibold text-ink">12시간</strong> 걸리던 빌드를
+          <strong class="font-semibold text-ink">3시간</strong>으로,
+          <strong class="font-semibold text-ink">102분</strong> 테스트 사이클을
+          <strong class="font-semibold text-ink">73분</strong>으로 — 반복 작업을
+          파이프라인으로 옮겨 시스템이 일하게 만듭니다.
         </p>
-      </div>
 
-      <!-- 우: CURRENTLY(재직) + CTA 버튼 — 헤어라인 컬럼 구분 · 세로 가운데 정렬 -->
-      <div class="flex flex-col justify-center lg:border-l lg:border-rule lg:pl-10">
-        <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">
-          Currently
-        </p>
-        <p class="mt-3 font-display text-xl font-semibold text-ink">DevOps Engineer</p>
-        <p class="mt-1.5 text-sm text-ink-soft">@ {current.company}</p>
-        <p class="mt-1 font-mono text-xs tracking-wide text-faint">{currentPeriod}</p>
-
-        <div class="mt-8 flex flex-wrap gap-2.5">
+        <div class="mt-10 grid max-w-md grid-cols-1 gap-2.5 sm:grid-cols-3">
           <!-- Projects 섹션이 채워지기 전까지 PROJECT 버튼 대신 경력으로 유도 -->
           <a
             href="#experience"
-            class="inline-flex items-center gap-2 border border-ink px-4 py-2.5 font-mono text-xs font-medium uppercase tracking-wide text-ink transition-colors hover:bg-ink hover:text-paper"
+            class="inline-flex items-center justify-center gap-2 border border-ink px-4 py-2.5 font-mono text-xs font-medium uppercase tracking-wide text-ink transition-colors hover:bg-ink hover:text-paper"
           >
             <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
@@ -59,7 +51,7 @@ const currentPeriod = current.period.replace('재직 중', '현재');
             href={site.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 border border-ink px-4 py-2.5 font-mono text-xs font-medium uppercase tracking-wide text-ink transition-colors hover:bg-ink hover:text-paper"
+            class="inline-flex items-center justify-center gap-2 border border-ink px-4 py-2.5 font-mono text-xs font-medium uppercase tracking-wide text-ink transition-colors hover:bg-ink hover:text-paper"
           >
             <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
@@ -68,7 +60,7 @@ const currentPeriod = current.period.replace('재직 중', '현재');
           </a>
           <a
             href={mailtoHref}
-            class="inline-flex items-center gap-2 border border-ink px-4 py-2.5 font-mono text-xs font-medium uppercase tracking-wide text-ink transition-colors hover:bg-ink hover:text-paper"
+            class="inline-flex items-center justify-center gap-2 border border-ink px-4 py-2.5 font-mono text-xs font-medium uppercase tracking-wide text-ink transition-colors hover:bg-ink hover:text-paper"
           >
             <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
@@ -77,6 +69,15 @@ const currentPeriod = current.period.replace('재직 중', '현재');
             CONTACT
           </a>
         </div>
+      </div>
+
+      <!-- 우: CURRENTLY(재직) — 헤어라인 컬럼 구분 · 세로 가운데 정렬 -->
+      <div class="flex flex-col justify-center lg:border-l lg:border-rule lg:pl-10">
+        <p class="font-mono text-xs uppercase tracking-[0.25em] text-muted">
+          Currently
+        </p>
+        <p class="mt-3 font-display text-xl font-semibold text-ink">{current.company}</p>
+        <p class="mt-1.5 font-mono text-xs tracking-wide text-faint">{currentPeriod}</p>
       </div>
     </div>
   </div>

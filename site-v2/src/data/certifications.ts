@@ -39,4 +39,10 @@ export const education: Education[] = [
     degree: '학사',
     period: '2017.03 – 2022.02',
   },
+  {
+    school: 'NaverCloudCamp (비트캠프)',
+    major: 'Java 웹 풀스택 과정',
+    degree: '수료',
+    period: '2022.12 – 2023.06',
+  },
 ];

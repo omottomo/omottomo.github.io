@@ -8,7 +8,7 @@ const values = [
   },
   {
     title: '안정성 · 재현성',
-    desc: '어디서 돌려도 같은 결과가 나오도록 빌드·배포 환경을 코드로 고정합니다.',
+    desc: '검증에 실패한 배포는 이전 이미지로 자동 롤백시키고, 어디서 돌려도 같은 결과가 나오도록 환경을 고정합니다.',
   },
   {
     title: '관측성 · 모니터링',
@@ -29,19 +29,18 @@ const values = [
     <p>
       약 3년차 DevOps 엔지니어입니다. <strong class="font-semibold text-ink"
         >글로벌 대기업 카메라 SW 개발 조직</strong
-      >의 빌드·테스트 파이프라인을 무인 자동화해 왔습니다. 야간 무인 빌드 체계로
-      12시간 걸리던 전체 빌드를 3시간으로 <strong class="font-semibold text-ink"
-        >약 75% 단축</strong
-      >했고, TDD 기반 테스트 사이클을 102분에서 73분으로 <strong
-        class="font-semibold text-ink">약 28% 단축</strong
-      >했습니다.
+      >의 빌드·테스트 파이프라인을 무인 자동화해 왔습니다. 야간 무인 빌드의
+      순차 실행을 병렬 구조로 재설계해 12시간 걸리던 파이프라인을 3시간으로
+      <strong class="font-semibold text-ink">약 75% 단축</strong>했고, TDD 기반
+      테스트 사이클은 Fail-fast 도입과 중복 테스트 제거로 102분에서 73분으로
+      <strong class="font-semibold text-ink">약 28% 단축</strong>했습니다.
     </p>
     <p>
       Quickbuild·Jenkins로 파이프라인을 오케스트레이션하고 Shell·Node.js로
       자동화 스크립트를 작성하며, Coverity 정적분석으로 품질 게이트를 운영하고
-      Linux 서버와 AWS·Naver Cloud로 인프라를 구성합니다. 테스트 자동화
-      프레임워크의 릴레이 서버를 Node.js로 직접 설계·구축한 경험이
-      있습니다.
+      Linux 기반 CI 서버를 직접 셋업·운영합니다. 신규 칩셋(AP) 플랫폼의 CI
+      셋업을 10여 회 반복 수행했고, 테스트 자동화 프레임워크 전환기에는 콜백
+      중계용 릴레이 서버를 Node.js·Express·Redis로 직접 설계·구축했습니다.
     </p>
     <p>
       실무 결과물의 상당수는 사내 규정상 공개할 수 없지만, 이 사이트 자체를 GitHub

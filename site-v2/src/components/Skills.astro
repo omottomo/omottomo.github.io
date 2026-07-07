@@ -1,37 +1,65 @@
 ---
 import Section from './Section.astro';
 import { skillGroups } from '../data/skills';
+
+// 카테고리 아이콘 — 24×24 스트로크 SVG 내부 마크업 (glass 카드 대신 ruled 스퀘어에 담는다)
+const icons: Record<string, string> = {
+  cicd: '<path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 5.36A9 9 0 0 0 20.49 15"/>',
+  terminal: '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>',
+  cloud: '<path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>',
+  shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>',
+  server: '<rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>',
+  branch: '<line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/>',
+};
 ---
 
 <Section
   id="skills"
-  title="기술 스택"
-  subtitle="빌드·배포 파이프라인을 무인화하는 데 필요한 기술을 깊이 있게 다룹니다. 진하게 표시된 항목이 핵심 역량입니다."
+  title="Skills"
+  subtitle="빌드·배포 파이프라인을 무인화하는 데 필요한 기술을 깊이 있게 다룹니다. 진한 테두리 배지가 핵심 역량입니다."
 >
-  <dl class="border-t border-rule-strong">
+  <div class="grid gap-px border border-rule-strong bg-rule-strong sm:grid-cols-2 lg:grid-cols-3">
     {
       skillGroups.map((group) => (
-        <div class="grid gap-2 border-b border-rule py-5 md:grid-cols-[13rem_1fr] md:gap-8">
-          <dt class="font-mono text-xs uppercase tracking-widest text-muted">
-            {group.category}
-          </dt>
-          <dd class="flex flex-wrap gap-x-6 gap-y-2">
+        <div class="bg-paper p-6">
+          <div class="flex items-center gap-3">
+            <span
+              class="inline-flex h-8 w-8 shrink-0 items-center justify-center border border-rule text-ink"
+              aria-hidden="true"
+            >
+              <svg
+                class="h-4 w-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                set:html={icons[group.icon]}
+              />
+            </span>
+            <h3 class="font-display text-lg font-bold tracking-tight text-ink">
+              {group.category}
+            </h3>
+          </div>
+
+          <div class="mt-5 flex flex-wrap gap-2">
             {group.items.map((item) => (
               <span
                 title={item.note}
                 class:list={[
-                  'cursor-default',
+                  'cursor-default border px-2.5 py-1 font-mono text-xs',
                   item.highlighted
-                    ? 'font-semibold text-ink underline decoration-rule-strong decoration-1 underline-offset-4'
-                    : 'text-muted',
+                    ? 'border-ink font-medium text-ink'
+                    : 'border-rule text-muted',
                 ]}
               >
                 {item.name}
               </span>
             ))}
-          </dd>
+          </div>
         </div>
       ))
     }
-  </dl>
+  </div>
 </Section>
