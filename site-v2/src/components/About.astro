@@ -1,69 +1,33 @@
 ---
 import Section from './Section.astro';
-
-const values = [
-  {
-    title: '자동화 · 무인화',
-    desc: '야간 무인 빌드처럼 사람이 개입하지 않아도 굴러가는 파이프라인을 설계합니다.',
-  },
-  {
-    title: '안정성 · 재현성',
-    desc: '검증에 실패한 배포는 이전 이미지로 자동 롤백시키고, 어디서 돌려도 같은 결과가 나오도록 환경을 고정합니다.',
-  },
-  {
-    title: '관측성 · 모니터링',
-    desc: '파이프라인의 상태와 지표를 드러내 문제를 빠르게 감지하고 대응합니다.',
-  },
-  {
-    title: '품질 게이트',
-    desc: '정적분석을 파이프라인에 넣어 품질 기준을 통과한 코드만 다음 단계로 보냅니다.',
-  },
-];
 ---
 
 <Section
   id="about"
-  title="반복을 없애는 DevOps 엔지니어"
+  title="안정적인 시스템을 구축 · 운영하는 DevOps 엔지니어입니다."
 >
-  <div class="max-w-2xl space-y-5 leading-relaxed text-ink-soft">
+  <div class="max-w-6xl space-y-5 leading-relaxed text-ink-soft break-keep">
     <p>
-      약 3년차 DevOps 엔지니어입니다. <strong class="font-semibold text-ink"
-        >글로벌 대기업 카메라 SW 개발 조직</strong
-      >의 빌드·테스트 파이프라인을 무인 자동화해 왔습니다. 야간 무인 빌드의
-      순차 실행을 병렬 구조로 재설계해 12시간 걸리던 파이프라인을 3시간으로
-      <strong class="font-semibold text-ink">약 75% 단축</strong>했고, TDD 기반
-      테스트 사이클은 Fail-fast 도입과 중복 테스트 제거로 102분에서 73분으로
-      <strong class="font-semibold text-ink">약 28% 단축</strong>했습니다.
+      2년차 DevOps 엔지니어입니다. 회사 협력사 개발팀의 코드를 테스트할 수 있는 파이프라인을 구축·운영하였으며, 
+      나아가 협력사 테스트 베드 시료들의 OS
+      Update를 <strong class="font-semibold text-ink">무인 자동화</strong>했습니다.
     </p>
     <p>
-      Quickbuild·Jenkins로 파이프라인을 오케스트레이션하고 Shell·Node.js로
-      자동화 스크립트를 작성하며, Coverity 정적분석으로 품질 게이트를 운영하고
-      Linux 기반 CI 서버를 직접 셋업·운영합니다. 신규 칩셋(AP) 플랫폼의 CI
-      셋업을 10여 회 반복 수행했고, 테스트 자동화 프레임워크 전환기에는 콜백
-      중계용 릴레이 서버를 Node.js·Express·Redis로 직접 설계·구축했습니다.
+      위 과정에서 Quickbuild·Jenkins 플랫폼에서 테스트 파이프라인을 구축하였으며
+      Code Coverage 측정을 연동해 협력사 TDD의 코드 품질을 수치화하고 Coverity를
+      통한 사후 정적분석으로 코드 품질 개선에 협조하였습니다. <br><br>
+      테스트 베드 OS
+      Update를 병렬 구조로 재설계해 12시간 걸리던 업데이트 파이프라인을 3시간으로
+      단축하여 <strong class="font-semibold text-ink">약 75% 시간 감소</strong>를
+      달성하였으며, TDD 기반 테스트 사이클에 대해 Fail-fast 도입과 중복 테스트
+      제거로 평균 102분 소요되던 테스트 시간을 73분으로 단축하여
+      <strong class="font-semibold text-ink">약 28%의 시간 감소</strong>를
+      달성하였습니다.
     </p>
     <p>
-      실무 결과물의 상당수는 사내 규정상 공개할 수 없지만, 이 사이트 자체를 GitHub
-      Actions로 빌드·배포해 <strong class="font-semibold text-ink"
-        >파이프라인을 다루는 방식</strong
-      >을 공개적으로 남깁니다.
+      이외에도 운영 서버에 대한 정기적 보안 조치를 수행하고, 테스트 자동화
+      프레임워크 전환기에는 콜백 중계용 릴레이 서버를 직접 설계·구축하였으며,
+      테스트 Dashboard 유지보수를 담당하여 진행하였습니다.
     </p>
-  </div>
-
-  <!-- 가치 4개 — 괘선 그리드 (글래스 카드 대체) -->
-  <div
-    class="mt-12 grid gap-px border border-rule-strong bg-rule-strong sm:grid-cols-2"
-  >
-    {
-      values.map((v, i) => (
-        <div class="bg-paper p-6">
-          <div class="font-mono text-xs tracking-widest text-faint">
-            0{i + 1}
-          </div>
-          <h3 class="mt-2 font-display text-lg font-bold text-ink">{v.title}</h3>
-          <p class="mt-2 text-sm leading-relaxed text-ink-soft">{v.desc}</p>
-        </div>
-      ))
-    }
   </div>
 </Section>

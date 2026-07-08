@@ -200,6 +200,16 @@ body {
   color: var(--color-paper);
 }
 
+/* 회사 로고 — 다크 모드에서는 흰색 실루엣으로 반전해 모노크롬 잉크 톤 유지 */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-logo {
+    filter: brightness(0) invert(1);
+  }
+}
+:root[data-theme="dark"] .theme-logo {
+  filter: brightness(0) invert(1);
+}
+
 /* 테마 토글 아이콘 — 현재 활성 테마 아이콘만 표시 (해·달) */
 .icon-dark { display: none; }
 .icon-light { display: inline-block; }

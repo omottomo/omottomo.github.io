@@ -25,7 +25,7 @@ export const skillGroups: SkillGroup[] = [
     ],
   },
   {
-    category: 'Automation · Scripting',
+    category: 'Language',
     icon: 'terminal',
     items: [
       { name: 'Shell', highlighted: true, note: '빌드·배포 자동화 스크립트' },
@@ -37,8 +37,8 @@ export const skillGroups: SkillGroup[] = [
     category: 'Cloud',
     icon: 'cloud',
     items: [
-      { name: 'AWS', highlighted: true, note: 'Solutions Architect Associate · 인프라 구성·운영' },
-      { name: 'Naver Cloud (NCP)', highlighted: true, note: 'Professional 자격 보유' },
+      { name: 'AWS', note: 'Solutions Architect Associate · 인프라 구성·운영' },
+      { name: 'Naver Cloud (NCP)', note: 'Professional 자격 보유' },
     ],
   },
   {
@@ -46,6 +46,7 @@ export const skillGroups: SkillGroup[] = [
     icon: 'shield',
     items: [
       { name: 'Coverity', note: '정적분석 기반 품질 게이트' },
+      { name: 'gcov·lcov', note: 'Code Coverage 측정·리포트 연동' },
     ],
   },
   {

@@ -4,52 +4,100 @@ import { experiences } from '../data/experience';
 ---
 
 <Section id="experience" title="Experience">
-  <div class="space-y-14">
+  {/* 타임라인 원장 — 왼쪽 헤어라인 스파인 + radius-0 노드, 항목별 계층 성과 */}
+  <div class="space-y-16">
     {
       experiences.map((exp) => (
-        <article>
-          <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-            <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-              <h3 class="font-display text-2xl font-bold tracking-tight text-ink">
-                {exp.company}
-              </h3>
-              {exp.active && (
-                <span class="font-mono text-xs uppercase tracking-widest text-build-ink">
-                  <span aria-hidden="true">●</span> 재직 중
-                </span>
-              )}
-            </div>
-            <span class="font-mono text-sm tabular-nums text-muted">
-              {exp.period}
-            </span>
+        <article class="relative">
+          {/* 타임라인 노드 — 재직 중이면 build-green 의미색, 아니면 괘선색 */}
+          <span
+            aria-hidden="true"
+            class:list={[
+              'absolute -left-[3.5px] top-1.5 h-2 w-2',
+              exp.active ? 'bg-build' : 'bg-rule-strong',
+            ]}
+          />
+
+          {/* 세로 스파인 — 헤어라인은 여기(성과 목록까지)에만 걸어 View Projects 앞에서 끊는다 */}
+          <div class="border-l border-rule-strong pl-6 sm:pl-9">
+          {/* 회사 + 고용형태 배지 + 재직 배지 */}
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+            <h3 class="font-display text-2xl font-bold tracking-tight text-ink">
+              {exp.company}
+            </h3>
+            {exp.employmentType && (
+              <span class="border border-rule-strong px-2 py-0.5 font-mono text-[0.7rem] uppercase tracking-widest text-muted">
+                {exp.employmentType}
+              </span>
+            )}
+            {exp.active && (
+              <span class="font-mono text-xs uppercase tracking-widest text-build-ink">
+                <span aria-hidden="true">●</span> 재직 중
+              </span>
+            )}
           </div>
 
           <p class="mt-2 font-medium text-ink-soft">{exp.role}</p>
 
-          {/* 회사에서 수행한 일 한 문장 요약 — 프로젝트 목록의 리드 */}
+          {/* 메타 — 근무지 · 기간 */}
+          <div class="mt-2 flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-sm tabular-nums text-muted">
+            {exp.location && <span>{exp.location}</span>}
+            {exp.location && (
+              <span aria-hidden="true" class="text-faint">
+                ·
+              </span>
+            )}
+            <span>{exp.period}</span>
+          </div>
+
+          {/* 회사에서 수행한 일 한 문장 요약 — experience.ts의 summary와 함께 주석 보류
           <p class="mt-6 max-w-2xl leading-relaxed text-ink-soft">
             {exp.summary}
-          </p>
+          </p> */}
 
-          {/* 핵심 프로젝트별 한 줄 요약 — 번호 매긴 괘선 행(원장 조판) */}
-          <ul class="mt-6 border-t border-rule">
+          {/* 주요 성과 — 모노 라벨 + 헤어라인 구분선 */}
+          <div class="mt-10 flex items-center gap-4">
+            <span class="font-mono text-xs uppercase tracking-widest text-muted">
+              주요 성과
+            </span>
+            <span aria-hidden="true" class="h-px flex-1 bg-rule" />
+          </div>
+
+          {/* 프로젝트별 성과 — 번호 매긴 원장 행, 제목 아래 세부 불릿 계층 */}
+          <ul class="mt-2">
             {exp.highlights.map((h, i) => (
-              <li class="grid grid-cols-[2.25rem_1fr] gap-3 border-b border-rule py-3.5 leading-relaxed text-ink-soft">
-                <span class="font-mono text-xs tabular-nums text-faint">
+              <li class="grid grid-cols-[2rem_1fr] gap-x-4 border-b border-rule py-4 last:border-b-0">
+                <span class="pt-1 font-mono text-xs tabular-nums text-faint">
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <span>{h}</span>
+                <div>
+                  <h4 class="font-semibold leading-snug text-ink">
+                    {h.title}
+                    {h.note && (
+                      <span class="font-normal text-muted"> — {h.note}</span>
+                    )}
+                  </h4>
+                  <ul class="mt-2.5 space-y-2">
+                    {h.points.map((p) => (
+                      <li class="flex gap-2.5 leading-relaxed text-ink-soft">
+                        <span
+                          aria-hidden="true"
+                          class="mt-2 h-1 w-1 flex-none bg-rule-strong"
+                        />
+                        <span>{p}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </li>
             ))}
           </ul>
+          </div>
 
-          {/* tech — chip 아님, 인라인 mono */}
-          <p class="mt-5 font-mono text-xs leading-relaxed text-muted">
-            <span class="text-faint">STACK — </span>
-            {exp.tech.join('  ·  ')}
-          </p>
-
-          <a href="#projects" class="link-accent mt-6 inline-block font-mono text-sm">
+          <a
+            href="#projects"
+            class="link-accent mt-8 ml-6 inline-block font-mono text-sm sm:ml-9"
+          >
             VIEW PROJECTS →
           </a>
         </article>

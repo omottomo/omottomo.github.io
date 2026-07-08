@@ -1,73 +1,242 @@
 ---
 import Section from './Section.astro';
 import { site, hasResume } from '../data/site';
+import { certifications, education } from '../data/certifications';
+
+// Education · Certifications · Contact 를 2단 배치로 통합한 섹션.
+// 좌: 소개 + 연락 링크 카드 스택 / 우: 교육·자격증 카드 + 이메일 CTA.
+// 헤더의 Certs / Education / Contact 세 항목 모두 이 섹션(#contact)으로 이동한다.
+
+// Hero.astro와 동일한 mailto 패턴 — 정적 사이트라 방문자의 메일 클라이언트를 바로 연다.
+const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('포트폴리오 문의')}`;
+
+// 24×24 스트로크 SVG 내부 마크업 (mail·github는 Hero.astro와 동일한 아이콘)
+const icons: Record<string, string> = {
+  mail: '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',
+  github:
+    '<path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>',
+  file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/>',
+  school:
+    '<path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/>',
+  award:
+    '<circle cx="12" cy="8" r="6"/><path d="M15.5 13 17 22l-5-3-5 3 1.5-9"/>',
+};
 
 const channels = [
   {
-    kicker: 'Email',
+    icon: 'mail',
     label: '이메일',
     value: site.email,
-    href: `mailto:${site.email}`,
+    href: mailtoHref,
     external: false,
+    glyph: '→',
   },
   {
-    kicker: 'GitHub',
+    icon: 'github',
     label: 'GitHub',
     value: `@${site.githubHandle}`,
     href: site.githubUrl,
     external: true,
+    glyph: '↗',
   },
 ];
 ---
 
-<Section
-  id="contact"
-  title="Contact"
-  subtitle="새로운 기회와 협업에 열려 있습니다. 편한 채널로 연락 주세요."
->
-  <div class="border-t border-rule-strong">
-    {
-      channels.map((c) => (
-        <a
-          href={c.href}
-          target={c.external ? '_blank' : undefined}
-          rel={c.external ? 'noopener noreferrer' : undefined}
-          class="group grid grid-cols-1 gap-1 border-b border-rule py-6 sm:grid-cols-[8rem_1fr_auto] sm:items-baseline sm:gap-6"
-        >
-          <span class="font-mono text-xs uppercase tracking-widest text-faint">
-            {c.kicker}
-          </span>
-          <span class="font-display text-lg font-bold text-ink">{c.label}</span>
-          <span class="break-all font-mono text-sm text-muted transition-colors group-hover:text-accent-ink group-hover:underline group-hover:decoration-accent group-hover:decoration-2 group-hover:underline-offset-4">
-            {c.value} →
-          </span>
-        </a>
-      ))
-    }
+<Section id="contact" title="감사합니다">
+  <div class="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_0.85fr] lg:items-start lg:gap-14">
+    <!-- 좌: 소개 + 연락 링크 카드 스택 -->
+    <div>
+      <p class="max-w-xl text-base leading-relaxed text-ink-soft sm:text-lg">
+        새로운 기회와 협업 제안에 언제나 열려 있습니다.<br />
+        아래 채널로 편하게 연락 주세요.
+      </p>
 
-    {
-      hasResume ? (
-        <a
-          href={site.resumeUrl}
-          class="group grid grid-cols-1 gap-1 border-b border-rule py-6 sm:grid-cols-[8rem_1fr_auto] sm:items-baseline sm:gap-6"
-        >
-          <span class="font-mono text-xs uppercase tracking-widest text-faint">
-            Resume
+      <!-- gap-px 원장 그리드 — 카드 사이 1px 헤어라인 (Skills와 동일 패턴) -->
+      <div class="mt-8 grid grid-cols-1 gap-px border border-rule-strong bg-rule-strong">
+        {
+          channels.map((c) => (
+            <a
+              href={c.href}
+              target={c.external ? '_blank' : undefined}
+              rel={c.external ? 'noopener noreferrer' : undefined}
+              class="group flex items-center gap-4 bg-paper p-5 transition-colors hover:bg-paper-soft"
+            >
+              <span
+                class="inline-flex h-10 w-10 shrink-0 items-center justify-center border border-rule text-ink"
+                aria-hidden="true"
+              >
+                <svg
+                  class="h-4 w-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  set:html={icons[c.icon]}
+                />
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="block font-display text-base font-bold tracking-tight text-ink">
+                  {c.label}
+                </span>
+                <span class="mt-0.5 block truncate font-mono text-sm text-muted">
+                  {c.value}
+                </span>
+              </span>
+              <span
+                class="shrink-0 font-mono text-base text-muted transition-colors group-hover:text-accent-ink"
+                aria-hidden="true"
+              >
+                {c.glyph}
+              </span>
+            </a>
+          ))
+        }
+
+        {
+          hasResume ? (
+            <a
+              href={site.resumeUrl}
+              class="group flex items-center gap-4 bg-paper p-5 transition-colors hover:bg-paper-soft"
+            >
+              <span
+                class="inline-flex h-10 w-10 shrink-0 items-center justify-center border border-rule text-ink"
+                aria-hidden="true"
+              >
+                <svg
+                  class="h-4 w-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  set:html={icons.file}
+                />
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="block font-display text-base font-bold tracking-tight text-ink">
+                  이력서
+                </span>
+                <span class="mt-0.5 block font-mono text-sm text-muted">
+                  PDF 다운로드
+                </span>
+              </span>
+              <span
+                class="shrink-0 font-mono text-base text-muted transition-colors group-hover:text-accent-ink"
+                aria-hidden="true"
+              >
+                ↓
+              </span>
+            </a>
+          ) : (
+            <div class="flex items-center gap-4 bg-paper p-5 opacity-70">
+              <span
+                class="inline-flex h-10 w-10 shrink-0 items-center justify-center border border-rule text-ink-soft"
+                aria-hidden="true"
+              >
+                <svg
+                  class="h-4 w-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  set:html={icons.file}
+                />
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="block font-display text-base font-bold tracking-tight text-ink-soft">
+                  이력서
+                </span>
+                <span class="mt-0.5 block font-mono text-sm text-faint">
+                  준비 중
+                </span>
+              </span>
+            </div>
+          )
+        }
+      </div>
+    </div>
+
+    <!-- 우: 교육 · 자격증 카드 + CTA (앵커 호환: #education, #certifications) -->
+    <div class="flex flex-col gap-6">
+      <div id="education" class="scroll-mt-16 border border-rule-strong bg-paper p-6">
+        <div class="flex items-center gap-3">
+          <span
+            class="inline-flex h-8 w-8 shrink-0 items-center justify-center border border-rule text-ink"
+            aria-hidden="true"
+          >
+            <svg
+              class="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              set:html={icons.school}
+            />
           </span>
-          <span class="font-display text-lg font-bold text-ink">이력서</span>
-          <span class="font-mono text-sm text-muted transition-colors group-hover:text-accent-ink group-hover:underline group-hover:decoration-accent group-hover:decoration-2 group-hover:underline-offset-4">
-            PDF 다운로드 →
-          </span>
-        </a>
-      ) : (
-        <div class="grid grid-cols-1 gap-1 border-b border-rule py-6 opacity-70 sm:grid-cols-[8rem_1fr_auto] sm:items-baseline sm:gap-6">
-          <span class="font-mono text-xs uppercase tracking-widest text-faint">
-            Resume
-          </span>
-          <span class="font-display text-lg font-bold text-ink-soft">이력서</span>
-          <span class="font-mono text-sm text-faint">준비 중</span>
+          <h3 class="font-display text-lg font-bold tracking-tight text-ink">교육</h3>
         </div>
-      )
-    }
+        <ul class="mt-5">
+          {
+            education.map((edu) => (
+              <li class="border-t border-rule py-4 first:border-t-0 first:pt-0 last:pb-0">
+                <p class="font-display text-base font-bold tracking-tight text-ink">
+                  {edu.school}
+                </p>
+                <p class="mt-0.5 text-sm text-muted">
+                  {[edu.major, edu.degree].filter(Boolean).join(' · ')}
+                </p>
+                {edu.period && (
+                  <p class="mt-1 font-mono text-xs tabular-nums text-muted">
+                    {edu.period}
+                  </p>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div id="certifications" class="scroll-mt-16 border border-rule-strong bg-paper p-6">
+        <div class="flex items-center gap-3">
+          <span
+            class="inline-flex h-8 w-8 shrink-0 items-center justify-center border border-rule text-ink"
+            aria-hidden="true"
+          >
+            <svg
+              class="h-4 w-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              set:html={icons.award}
+            />
+          </span>
+          <h3 class="font-display text-lg font-bold tracking-tight text-ink">자격증</h3>
+        </div>
+        <ul class="mt-5">
+          {
+            certifications.map((cert) => (
+              <li class="border-t border-rule py-4 first:border-t-0 first:pt-0 last:pb-0">
+                <p class="font-display text-base font-bold tracking-tight text-ink">
+                  {cert.name}
+                </p>
+                <p class="mt-1 font-mono text-xs tabular-nums text-muted">
+                  {cert.issuer} · 취득 {cert.date}
+                </p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
   </div>
 </Section>

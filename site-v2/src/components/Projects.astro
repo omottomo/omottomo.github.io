@@ -1,107 +1,112 @@
 ---
 import Section from './Section.astro';
-import { projects, placeholderSlots } from '../data/projects';
+import { projects } from '../data/projects';
+// 기술 칩 앞 기호 — Skills 카테고리 아이콘을 공유해 두 섹션의 분류 체계를 일치시킨다
+import { icons, techIcon } from '../data/icons';
 
-const hasProjects = projects.length > 0;
-const par = ['Problem', 'Approach', 'Result'];
+// Problem → Approach → Result 3단 원장 — [라벨, 데이터 필드] 쌍으로 순회
+const par = [
+  ['Problem', 'problem'],
+  ['Approach', 'approach'],
+  ['Result', 'result'],
+] as const;
 ---
 
 <Section
   id="projects"
   title="Projects"
-  subtitle="Problem · Approach · Result 3단으로 정리합니다. 공개 검증 가능한 결과물을 준비 중입니다."
 >
-  {
-    hasProjects ? (
-      <div class="grid gap-px border border-rule-strong bg-rule-strong md:grid-cols-2">
-        {projects.map((p, idx) => (
-          <article class="flex flex-col bg-paper p-6">
-            <div class="flex items-baseline justify-between gap-3">
-              <span class="font-mono text-xs tracking-widest text-faint">
-                PRJ.0{idx + 1}
-              </span>
-            </div>
-            <h3 class="mt-2 font-display text-xl font-bold tracking-tight text-ink">
-              {p.title}
-            </h3>
-            <p class="mt-1 text-sm text-muted">{p.tagline}</p>
-            <dl class="mt-5 space-y-4 border-t border-rule pt-4 text-sm">
-              <div>
-                <dt class="font-mono text-xs uppercase tracking-widest text-faint">
-                  Problem
-                </dt>
-                <dd class="mt-1 leading-relaxed text-ink-soft">{p.problem}</dd>
-              </div>
-              <div>
-                <dt class="font-mono text-xs uppercase tracking-widest text-faint">
-                  Approach
-                </dt>
-                <dd class="mt-1 leading-relaxed text-ink-soft">{p.approach}</dd>
-              </div>
-              <div>
-                <dt class="font-mono text-xs uppercase tracking-widest text-faint">
-                  Result
-                </dt>
-                <dd class="mt-1 leading-relaxed text-ink-soft">{p.result}</dd>
-              </div>
-            </dl>
-            <p class="mt-5 font-mono text-xs leading-relaxed text-muted">
-              <span class="text-faint">STACK — </span>
-              {p.tech.join('  ·  ')}
-            </p>
-            {p.links && p.links.length > 0 && (
-              <div class="mt-5 flex flex-wrap gap-4">
-                {p.links.map((l) => (
-                  <a
-                    href={l.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="link-accent font-mono text-sm"
-                  >
-                    {l.label} →
-                  </a>
-                ))}
-              </div>
-            )}
-          </article>
-        ))}
-      </div>
-    ) : (
-      <div>
-        <div class="grid gap-px border border-rule-strong bg-rule-strong md:grid-cols-2">
-          {Array.from({ length: placeholderSlots }).map((_, idx) => (
-            <div class="bg-paper p-6" aria-hidden="true">
-              <div class="flex items-center justify-between">
-                <span class="font-mono text-xs tracking-widest text-faint">
-                  PRJ.0{idx + 1}
-                </span>
-                <span class="border border-dashed border-rule-strong px-2 py-0.5 font-mono text-xs uppercase tracking-widest text-faint">
-                  준비 중
-                </span>
-              </div>
-              <div class="mt-6 space-y-4 border-t border-rule pt-4">
-                {par.map((k) => (
-                  <div>
-                    <div class="font-mono text-xs uppercase tracking-widest text-faint">
-                      {k}
-                    </div>
-                    <div class="mt-1.5 space-y-1.5">
-                      <span class="block h-2.5 w-full bg-well" />
-                      <span class="block h-2.5 w-4/5 bg-well" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+  {/* 프로젝트 원장 — 카드 대신 헤어라인 괘선으로 구분되는 전폭 스택 (LEDGER//GRID) */}
+  <div class="divide-y divide-rule">
+    {
+      projects.map((p, idx) => (
+        <article class="py-12 first:pt-0 last:pb-0">
+          <span class="font-mono text-xs tracking-widest text-faint">
+            PRJ.{String(idx + 1).padStart(2, '0')}
+          </span>
 
-        <p class="mt-6 max-w-2xl font-mono text-sm leading-relaxed text-muted">
-          현재 CI/CD 롤백 데모를 별도로 제작 중이며, 완성되는 대로 이 자리에
-          <span class="text-ink-soft"> Problem · Approach · Result</span> 원장으로
-          공개합니다.
-        </p>
-      </div>
-    )
-  }
+          <h3 class="mt-2 font-display text-2xl font-bold leading-snug tracking-tight text-ink sm:text-[1.7rem]">
+            {p.title}
+          </h3>
+
+          {/* 메타 — 기간 · 역할 · 기여도 (스크린샷의 서브타이틀 라인) */}
+          <p class="mt-2.5 flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-[0.8rem] tabular-nums text-muted">
+            {p.meta.map((m, i) => (
+              <>
+                {i > 0 && (
+                  <span aria-hidden="true" class="text-faint">
+                    ·
+                  </span>
+                )}
+                <span>{m}</span>
+              </>
+            ))}
+          </p>
+
+          {/* Problem / Approach / Result — 버밀리언 틱 사각 + 모노 라벨 */}
+          <div class="mt-8 space-y-6">
+            {par.map(([label, key]) => (
+              <div>
+                <h4 class="flex items-center gap-2.5 font-mono text-xs font-semibold uppercase tracking-[0.22em] text-ink">
+                  <span aria-hidden="true" class="h-2 w-2 flex-none bg-accent" />
+                  {label}
+                </h4>
+                <p class="mt-2.5 max-w-5xl pl-[1.125rem] leading-relaxed text-ink-soft break-keep">
+                  {p[key]}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* 면접 관점 한 줄 — 이 프로젝트가 보여주는 것 */}
+          {p.takeaway && (
+            <p class="mt-7 max-w-5xl border-l-2 border-rule-strong pl-4 text-sm leading-relaxed text-muted break-keep">
+              <span class="font-semibold text-ink-soft">
+                이 프로젝트가 보여주는 것
+              </span>
+              {' — '}
+              {p.takeaway}
+            </p>
+          )}
+
+          {/* 기술 칩 — radius 0 · 헤어라인 보더 (사이트 정체성 유지) */}
+          <ul class="mt-7 flex flex-wrap gap-2" aria-label="사용 기술">
+            {p.tech.map((t) => (
+              <li class="inline-flex items-center gap-1.5 border border-rule-strong bg-panel px-2.5 py-1 font-mono text-xs text-ink-soft">
+                {techIcon[t] && (
+                  <svg
+                    class="h-3 w-3 shrink-0 text-muted"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    set:html={icons[techIcon[t]]}
+                  />
+                )}
+                {t}
+              </li>
+            ))}
+          </ul>
+
+          {p.links && p.links.length > 0 && (
+            <div class="mt-6 flex flex-wrap gap-4">
+              {p.links.map((l) => (
+                <a
+                  href={l.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="link-accent font-mono text-sm"
+                >
+                  {l.label} →
+                </a>
+              ))}
+            </div>
+          )}
+        </article>
+      ))
+    }
+  </div>
 </Section>
