@@ -6,8 +6,6 @@ export interface Project {
   problem: string;
   approach: string;
   result: string;
-  /** 면접 관점 한 줄 — 이 프로젝트가 보여주는 것 (선택) */
-  takeaway?: string;
   tech: string[];
   links?: { label: string; href: string }[];
 }
@@ -25,8 +23,6 @@ export const projects: Project[] = [
       '매일 정해진 시각에 최신 OS 이미지 조회 → 테스트 베드 반입 → 시료 Fusing → 산출물 패치 생성 → TDD 검증 → Pass 시 develop 자동 merge까지 전 단계를 무인 파이프라인으로 재구성했습니다. TDD Fail 시 해당 이미지를 무효 처리하고 직전 유효 이미지로 자동 Rollback하는 안전장치를 함께 설계했으며, 순차 처리의 병목이던 전체 시료 일괄 테스트 단계를 데이터로 분석해 프로젝트별 병렬 수행으로 바꾸는 안을 개발 조직에 제안, 채택시켰습니다.',
     result:
       '12시간 걸리던 파이프라인이 3시간 무인 파이프라인이 됐습니다(약 75% 단축). 진행 중 수동 개입 0회, Fail 시 자동 Rollback으로 안정성까지 확보했습니다.',
-    takeaway:
-      '반복 작업을 측정하고, 병목을 특정하고, 무인 자동화로 제거하는 — 제가 일하는 방식의 기준이 된 프로젝트입니다.',
     tech: ['Quickbuild', 'Shell Script', 'ADB'],
   },
   {
@@ -38,8 +34,6 @@ export const projects: Project[] = [
       '불필요한 수행을 구조적으로 제거했습니다. 기존에는 Fail이 발생해도 전체 테스트케이스를 끝까지 수행했지만, 개발자의 목적은 Fail 수정이므로 Fail 발생 즉시 중단하는 Fail-Stop을 도입했습니다. 또한 Heap leak 검사를 위해 전체 테스트를 2회 반복하던 구조를, 1회차부터 leak 검사를 켜 누수 의심 테스트케이스만 2회차에 재검사하도록 바꿔 반복 수행량 자체를 줄였습니다.',
     result:
       'TDD 평균 테스트 시간이 102분에서 73분으로 약 28% 단축됐고, merge 대기 병목이 완화되어 개발 흐름이 회복됐습니다.',
-    takeaway:
-      '주어진 요청이 아니라 운영하며 느낀 비효율에서 출발해, 프로세스 분석 → 문제 정의 → 개선안 제안 → 구현·반영까지 전 과정을 주도한 생산성 개선 사례입니다.',
     tech: ['Quickbuild', 'Shell Script', 'Linux'],
   },
   {
@@ -51,8 +45,6 @@ export const projects: Project[] = [
       '구버전 API를 사용하던 테스트 스크립트를 전수 조사해 신규 API로 리팩토링하고, 변경된 호출·응답 흐름을 중계할 릴레이 서버를 Node.js + Express로 직접 설계·구축했습니다. 영구 저장이 필요 없는 진행 중 데이터만 다루므로 저장소는 Redis를 선택해, 요구사항에 맞는 최소 구성을 유지했습니다.',
     result:
       '운영 중인 파이프라인을 중단 없이 신규 프레임워크로 전환했고, 전환의 핵심 컴포넌트인 릴레이 서버를 직접 만들어 남겼습니다.',
-    takeaway:
-      'CI 운영자이면서 필요한 서버 컴포넌트를 직접 만들 수 있는 개발 역량, 그리고 데이터 특성(휘발성)에 맞춰 Redis를 선택한 기술 선택의 근거까지 설명할 수 있는 프로젝트입니다.',
     tech: ['Node.js', 'Express', 'Redis', 'Quickbuild', 'Shell Script'],
   },
   {
@@ -64,8 +56,6 @@ export const projects: Project[] = [
       '첫 온보딩에서 Jira·Confluence 기반 업무·문서 관리 프로세스를 정착시키고, 이후 Build Enable → 파이프라인 Enable → 안정화로 이어지는 표준 절차로 반복 수행했습니다. 신규 환경에서 시료 Panic을 유발하는 테스트케이스를 식별·필터링해 파이프라인 안정성을 확보했습니다.',
     result:
       '여러 세대의 신규 칩셋을 운영 중인 CI에 영향 없이(무중단) 온보딩했고, 1회성 고위험 작업을 표준화된 반복 가능한 프로세스로 만들었습니다.',
-    takeaway:
-      '운영 환경을 건드리는 작업을 반복 가능한 표준 프로세스로 만든 경험과, 새 환경의 불안정성을 테스트케이스 필터링으로 통제한 안정성 운영 감각입니다.',
     tech: ['Quickbuild', 'Jenkins', 'ADB', 'Shell Script'],
   },
   {
@@ -77,8 +67,6 @@ export const projects: Project[] = [
       '비교 대상인 target / origin 브랜치를 파라미터로 입력받아 SourcererCC로 중복 코드를 분석하는 파이프라인을 CI 위에 구축했습니다. 신규 버전이 나와도 파라미터만 바꾸면 동일 절차·동일 기준으로 반복 측정할 수 있습니다.',
     result:
       '수동 분석이 파라미터 입력 한 번으로 끝나는 자동화 파이프라인이 됐고, 버전마다 동일 기준으로 비교할 수 있어 측정 정합성을 확보했습니다.',
-    takeaway:
-      '"다음에도 반복될 일인가?"를 먼저 묻고, 일회성 요청을 재사용 가능한 프레임워크로 남기는 습관을 보여주는 프로젝트입니다.',
     tech: ['Quickbuild', 'Shell Script', 'SourcererCC'],
   },
   {
@@ -90,8 +78,6 @@ export const projects: Project[] = [
       'Jenkins 스케줄러 → 빌드 → Coverity 정적분석 리포트로 이어지는 주간 파이프라인을 무중단 운영하고, 신규 워크스테이션·노드의 init 스크립트를 리팩토링해 재현 가능한 셋업으로 표준화했습니다. CI 현황 대시보드(React · Node.js)를 유지보수하고, 운영 서버의 정기 보안 점검 위반사항을 조치했습니다.',
     result:
       '정적분석 품질 게이트가 상시 운영되고, 어떤 서버든 동일한 절차로 CI 환경을 재현할 수 있으며, CI 엔지니어와 개발자가 같은 대시보드로 상태를 공유합니다.',
-    takeaway:
-      '화려한 구축보다 꾸준한 운영 — 파이프라인을 멈추지 않게 유지하는 운영 역량을 보여주는 영역입니다.',
     tech: ['Jenkins', 'Coverity', 'React', 'Node.js', 'MySQL', 'Linux'],
   },
 ];

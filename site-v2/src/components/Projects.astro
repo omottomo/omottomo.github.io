@@ -58,17 +58,6 @@ const par = [
             ))}
           </div>
 
-          {/* 면접 관점 한 줄 — 이 프로젝트가 보여주는 것 */}
-          {p.takeaway && (
-            <p class="mt-7 max-w-5xl border-l-2 border-rule-strong pl-4 text-sm leading-relaxed text-muted break-keep">
-              <span class="font-semibold text-ink-soft">
-                이 프로젝트가 보여주는 것
-              </span>
-              {' — '}
-              {p.takeaway}
-            </p>
-          )}
-
           {/* 기술 칩 — radius 0 · 헤어라인 보더 (사이트 정체성 유지) */}
           <ul class="mt-7 flex flex-wrap gap-2" aria-label="사용 기술">
             {p.tech.map((t) => (
