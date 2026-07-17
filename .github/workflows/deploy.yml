@@ -22,14 +22,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
-          node-version: 20 # 로컬/스택 베이스라인과 동일(Astro 5는 Node 20 지원)
+          node-version-file: .nvmrc # 로컬(nvm)과 CI가 항상 같은 Node를 쓰도록 단일 소스에서 읽는다
           cache: npm
       - run: npm ci
       - run: npm run second:build # → site-v2/dist/ (site-v2 리디자인을 배포, .nojekyll 포함)
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: site-v2/dist
 
@@ -41,4 +41,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
