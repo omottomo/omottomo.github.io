@@ -24,7 +24,7 @@ src/
 ├── components/            # Hero/About/Experience/Skills/Certifications/Projects/Contact
 ├── data/                  # 콘텐츠 데이터(experience/skills/certifications/projects/site)
 └── styles/global.css      # Tailwind v4 @theme 토큰(다크·인디고·글래스) + 모션
-public/                    # .nojekyll · favicon.svg · og-image.png (+ resume.pdf는 준비 중)
+public/                    # .nojekyll · favicon.svg · og-image.png · resume.pdf(이력서)
 .github/workflows/deploy.yml
 ```
 
