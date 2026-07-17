@@ -10,7 +10,7 @@
 
 | 항목 | 선택 | 이유 |
 |------|------|------|
-| 프레임워크 | **Astro 5** | 기본 정적 HTML(제로 JS) → 안정적 결과 + Lighthouse 유리 + SEO. 콘텐츠를 `src/data/`로 분리해 나중에 Projects만 추가하기 쉬움. (최신 Astro 6는 Node ≥22.12 요구 → 로컬/CI 베이스라인 Node 20에 맞춰 5로 고정) |
+| 프레임워크 | **Astro 5** | 기본 정적 HTML(제로 JS) → 안정적 결과 + Lighthouse 유리 + SEO. 콘텐츠를 `src/data/`로 분리해 나중에 Projects만 추가하기 쉬움. (초기엔 Node 20 베이스라인이라 5로 고정했고, Node 24로 올린 뒤에도 동작에 문제가 없어 유지 중 — Astro 6 전환은 별도 과제) |
 | 스타일 | **Tailwind CSS v4** (`@tailwindcss/vite`) | 다크/인디고/글래스 톤을 유틸리티로 빠르게. Astro 6에서 deprecated된 `@astrojs/tailwind` 대신 first-party Vite 플러그인 채택 |
 | 배포 | **GitHub Actions → GitHub Pages** | 소스 이력 보존 + 커밋마다 자동 갱신 + 초록 체크 = DevOps 신호 |
 | 폰트 | Pretendard · Sora · Fira Code | 본문 · 제목 · 코드/태그 (CDN) |
@@ -40,7 +40,8 @@ npm run preview  # 빌드 결과 미리보기
 npm run check    # astro check (타입 검사)
 ```
 
-Node 20 LTS 기준.
+**Node 24 LTS 기준.** 버전은 `.nvmrc`(단일 소스)에 고정 — 로컬은 `nvm use`, CI는 `setup-node`의 `node-version-file`이 같은 파일을 읽는다.
+`package.json`의 `engines` + `.npmrc`의 `engine-strict=true`로, 다른 Node에서 `npm ci` 시 경고가 아니라 **실패**하게 해 로컬/CI 환경 차이를 막는다.
 
 ## 배포
 
