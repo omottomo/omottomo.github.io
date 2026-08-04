@@ -1,107 +1,101 @@
 ---
-import Section from './Section.astro';
+import { highlights } from '../data/highlights';
 import { experiences } from '../data/experience';
+
+const current = experiences.find((e) => e.active) ?? experiences[0];
+
+// 요약 섹션에서 옮겨온 정량 성과 카드 — 경력 문맥 안에서 읽히도록 배치
+const metrics = [
+  { value: '75%', label: '시료 OS 배포 파이프라인', detail: '12h → 3h · 무인 자동화' },
+  { value: '28%', label: 'TDD 테스트 소요 시간', detail: '102분 → 73분 · Fail-Stop' },
+];
+
+const par = [
+  ['Problem', 'problem'],
+  ['Approach', 'approach'],
+  ['Result', 'result'],
+] as const;
 ---
 
-<Section id="experience" title="Experience">
-  {/* 타임라인 원장 — 왼쪽 헤어라인 스파인 + radius-0 노드, 항목별 계층 성과 */}
-  <div class="space-y-16">
-    {
-      experiences.map((exp) => (
-        <article class="relative">
-          {/* 타임라인 노드 — 재직 중이면 build-green 의미색, 아니면 괘선색 */}
-          <span
-            aria-hidden="true"
-            class:list={[
-              'absolute -left-[3.5px] top-1.5 h-2 w-2',
-              exp.active ? 'bg-build' : 'bg-rule-strong',
-            ]}
-          />
+<section id="experience" class="scroll-mt-24 border-t border-line py-16">
+  <div class="flex flex-wrap items-baseline justify-between gap-5">
+    <h2 class="font-mono text-[15px] uppercase tracking-[0.14em] text-faint">Experience</h2>
+    <p class="text-[13.5px] text-muted">항목을 클릭하면 상세가 열립니다</p>
+  </div>
 
-          {/* 세로 스파인 — 헤어라인은 여기(성과 목록까지)에만 걸어 View Projects 앞에서 끊는다 */}
-          <div class="border-l border-rule-strong pl-6 sm:pl-9">
-          {/* 회사 + 고용형태 배지 + 재직 배지 */}
-          <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
-            <h3 class="font-display text-2xl font-bold tracking-tight text-ink">
-              {exp.company}
-            </h3>
-            {exp.employmentType && (
-              <span class="border border-rule-strong px-2 py-0.5 font-mono text-[0.7rem] uppercase tracking-widest text-muted">
-                {exp.employmentType}
-              </span>
-            )}
-            {exp.active && (
-              <span class="font-mono text-xs uppercase tracking-widest text-build-ink">
-                <span aria-hidden="true">●</span> 재직 중
-              </span>
-            )}
-          </div>
+  <div class="mt-6 flex flex-wrap items-baseline gap-3.5">
+    <h3 class="text-[22px] font-bold tracking-[-0.02em]">{current.company}</h3>
+    <span class="font-mono text-[13px] text-muted">
+      2023.09 ~ <span class="text-ok">재직 중</span>
+    </span>
+  </div>
+  <p class="mt-2 max-w-[34em] text-[15px] text-muted break-keep">
+    협력사 Camera parte의 CI/CD 파이프라인 운영·자동화 및 Linux 서버 구축·장애 대응
+  </p>
 
-          <p class="mt-2 font-medium text-ink-soft">{exp.role}</p>
+  {/* 정량 성과 */}
+  <div
+    class="mt-7 grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2"
+  >
+    {metrics.map((m) => (
+      <div class="bg-surface px-6 py-6.5">
+        <p class="flex items-baseline gap-1.5">
+          <span class="font-mono text-[40px] font-medium tracking-[-0.03em] text-accent">
+            {m.value}
+          </span>
+          <span class="text-xl text-accent">↓</span>
+        </p>
+        <p class="mt-2 text-[14.5px] font-semibold">{m.label}</p>
+        <p class="mt-1 font-mono text-[13px] text-muted">{m.detail}</p>
+      </div>
+    ))}
+  </div>
 
-          {/* 메타 — 근무지 · 기간 */}
-          <div class="mt-2 flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-sm tabular-nums text-muted">
-            {exp.location && <span>{exp.location}</span>}
-            {exp.location && (
-              <span aria-hidden="true" class="text-faint">
-                ·
-              </span>
-            )}
-            <span>{exp.period}</span>
-          </div>
-
-          {/* 회사에서 수행한 일 한 문장 요약 — experience.ts의 summary와 함께 주석 보류
-          <p class="mt-6 max-w-2xl leading-relaxed text-ink-soft">
-            {exp.summary}
-          </p> */}
-
-          {/* 주요 성과 — 모노 라벨 + 헤어라인 구분선 */}
-          <div class="mt-10 flex items-center gap-4">
-            <span class="font-mono text-xs uppercase tracking-widest text-muted">
-              주요 성과
+  {/* 성과 목록 — 한 줄 요약 + 펼침 상세 (네이티브 details, JS 0) */}
+  <div class="mt-7 overflow-hidden rounded-xl border border-line bg-surface">
+    {highlights.map((h, i) => (
+      <details class="row border-t border-line-soft first:border-t-0" open={i === 0}>
+        <summary class="grid grid-cols-[34px_1fr_24px] items-start gap-4 px-5.5 py-5 transition-colors">
+          <span class="pt-0.5 font-mono text-[12.5px] text-dim">
+            {String(i + 1).padStart(2, '0')}
+          </span>
+          <span>
+            <span class="block text-[16.5px] font-semibold tracking-[-0.01em] break-keep">
+              {h.title}
             </span>
-            <span aria-hidden="true" class="h-px flex-1 bg-rule" />
-          </div>
+            <span class="mt-1.5 block text-[14.5px] leading-[1.55] text-muted break-keep">
+              {h.oneLine}
+            </span>
+          </span>
+          <span class="sign pt-px text-right font-mono text-[17px] text-faint" aria-hidden="true"
+          ></span>
+        </summary>
 
-          {/* 프로젝트별 성과 — 번호 매긴 원장 행, 제목 아래 세부 불릿 계층 */}
-          <ul class="mt-2">
-            {exp.highlights.map((h, i) => (
-              <li class="grid grid-cols-[2rem_1fr] gap-x-4 border-b border-rule py-4 last:border-b-0">
-                <span class="pt-1 font-mono text-xs tabular-nums text-faint">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <div>
-                  <h4 class="font-semibold leading-snug text-ink">
-                    {h.title}
-                    {h.note && (
-                      <span class="font-normal text-muted"> — {h.note}</span>
-                    )}
-                  </h4>
-                  <ul class="mt-2.5 space-y-2">
-                    {h.points.map((p) => (
-                      <li class="flex gap-2.5 leading-relaxed text-ink-soft">
-                        <span
-                          aria-hidden="true"
-                          class="mt-2 h-1 w-1 flex-none bg-rule-strong"
-                        />
-                        <span>{p}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+        <div class="row-detail pb-6.5 pl-21 pr-5.5">
+          <p class="mb-4.5 font-mono text-[12.5px] text-faint">{h.meta}</p>
+          <div class="flex flex-col gap-4">
+            {par.map(([label, key]) => (
+              <div>
+                <p class="font-mono text-[11.5px] uppercase tracking-[0.12em] text-accent">
+                  {label}
+                </p>
+                <p class="mt-1.5 text-[15px] leading-[1.7] text-text-soft break-keep">
+                  {h[key]}
+                </p>
+              </div>
+            ))}
+          </div>
+          <ul class="mt-4.5 flex flex-wrap gap-1.5" aria-label="사용 기술">
+            {h.tech.map((t) => (
+              <li
+                class="rounded-md border border-line-soft bg-surface-2 px-2.5 py-1 font-mono text-xs text-muted"
+              >
+                {t}
               </li>
             ))}
           </ul>
-          </div>
-
-          <a
-            href="#projects"
-            class="link-accent mt-8 ml-6 inline-block font-mono text-sm sm:ml-9"
-          >
-            VIEW PROJECTS →
-          </a>
-        </article>
-      ))
-    }
+        </div>
+      </details>
+    ))}
   </div>
-</Section>
+</section>

@@ -1,57 +1,25 @@
 ---
-import Section from './Section.astro';
-import { skillGroups } from '../data/skills';
-// 카테고리 아이콘 — Projects 기술 칩과 공유하는 단일 진실원본 (data/icons.ts)
-import { icons } from '../data/icons';
+// 카테고리별 한 줄 요약 — 배지 클러스터를 줄이고 "무엇을 어디까지" 만 남겼다.
+const groups = [
+  { category: 'CI/CD', items: 'Jenkins · Quickbuild', note: '파이프라인 오케스트레이션 · 야간 무인 빌드 · 분산 빌드 구성' },
+  { category: 'Language', items: 'Shell · Node.js · Java', note: '자동화 스크립트 · 릴레이 서버(Express·Redis) · Spring 백엔드' },
+  { category: 'Cloud', items: 'AWS · Naver Cloud', note: 'SAA · NCP Professional 자격 보유 · 인프라 구성·운영' },
+  { category: 'Quality', items: 'Coverity · gcov·lcov', note: '정적분석 품질 게이트 · Code Coverage 측정·리포트 연동' },
+  { category: 'OS · Infra', items: 'Linux', note: '서버 구성·운영 · init 스크립트 표준화 · 정기 보안 점검 조치' },
+  { category: 'SCM · Ops', items: 'Git · GitHub Actions', note: '형상관리·협업 · 이 사이트 CI/CD 배포' },
+];
 ---
 
-<Section
-  id="skills"
-  title="Skills"
-  subtitle="구현을 위해 필요한 기술들을 깊이 있게 다룹니다."
->
-  <div class="grid gap-px border border-rule-strong bg-rule-strong sm:grid-cols-2 lg:grid-cols-3">
-    {
-      skillGroups.map((group) => (
-        <div class="bg-paper p-6">
-          <div class="flex items-center gap-3">
-            <span
-              class="inline-flex h-8 w-8 shrink-0 items-center justify-center border border-rule text-ink"
-              aria-hidden="true"
-            >
-              <svg
-                class="h-4 w-4"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                set:html={icons[group.icon]}
-              />
-            </span>
-            <h3 class="font-display text-lg font-bold tracking-tight text-ink">
-              {group.category}
-            </h3>
-          </div>
+<section id="skills" class="scroll-mt-24 border-t border-line py-16">
+  <h2 class="font-mono text-[15px] uppercase tracking-[0.14em] text-faint">Skills</h2>
 
-          <div class="mt-5 flex flex-wrap gap-2">
-            {group.items.map((item) => (
-              <span
-                title={item.note}
-                class:list={[
-                  'cursor-default border px-2.5 py-1 font-mono text-xs',
-                  item.highlighted
-                    ? 'border-ink font-medium text-ink'
-                    : 'border-rule text-muted',
-                ]}
-              >
-                {item.name}
-              </span>
-            ))}
-          </div>
-        </div>
-      ))
-    }
+  <div class="mt-6 grid gap-x-10 gap-y-7 sm:grid-cols-2 lg:grid-cols-3">
+    {groups.map((g) => (
+      <div>
+        <p class="mb-2.5 text-[13px] font-bold tracking-[0.04em]">{g.category}</p>
+        <p class="text-[15px] leading-[1.7] text-text-soft">{g.items}</p>
+        <p class="mt-1 text-[13.5px] text-faint break-keep">{g.note}</p>
+      </div>
+    ))}
   </div>
-</Section>
+</section>
