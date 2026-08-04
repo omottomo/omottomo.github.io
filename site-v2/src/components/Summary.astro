@@ -1,0 +1,54 @@
+---
+import { experiences } from '../data/experience';
+
+const current = experiences.find((e) => e.active) ?? experiences[0];
+const core = ['Jenkins', 'Quickbuild', 'Shell', 'Node.js', 'Coverity', 'Linux'];
+---
+
+<section id="summary" class="scroll-mt-24 py-[88px_0_72px] pb-18 pt-22">
+  <p class="font-mono text-[12.5px] uppercase tracking-[0.14em] text-accent">
+    DevOps Engineer
+  </p>
+
+  <h1
+    class="mt-3.5 text-[clamp(38px,6vw,58px)] font-bold leading-[1.05] tracking-[-0.03em]"
+  >
+    이동욱
+  </h1>
+
+  <p
+    class="mt-5 max-w-[30em] text-[clamp(19px,2.4vw,23px)] leading-[1.5] tracking-[-0.01em] break-keep"
+  >
+    안정적인 시스템 운영은 <strong class="font-bold">단순함</strong>에서 비롯된다
+    생각합니다.<br />
+    해당 목표를 이루기 위해 노력하는 <strong class="font-bold">DevOps Engineer</strong>
+    입니다.
+  </p>
+
+  <div class="mt-10 flex flex-wrap items-center gap-x-10 gap-y-3">
+    <div class="flex items-center gap-3">
+      <img
+        src="/images/thundersoft-logo.png"
+        alt="ThunderSoft 로고"
+        width="1492"
+        height="187"
+        class="logo-invert h-4 w-auto"
+        loading="eager"
+      />
+      <span class="text-[15px] font-semibold">{current.company}</span>
+    </div>
+    <span class="font-mono text-[13px] text-muted">{current.role}</span>
+    <span class="font-mono text-[13px] text-muted">
+      2023.09 ~ <span class="text-ok">재직 중</span>
+    </span>
+  </div>
+
+  <div class="mt-7 flex flex-wrap items-center gap-2">
+    <span class="mr-1 font-mono text-xs uppercase tracking-[0.1em] text-faint">Core</span>
+    {core.map((t) => (
+      <span class="rounded-full border border-line-strong px-3 py-1 text-[13px] font-medium">
+        {t}
+      </span>
+    ))}
+  </div>
+</section>
