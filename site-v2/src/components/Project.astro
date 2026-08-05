@@ -28,7 +28,7 @@ const slots = [1, 2];
       <>
         <div class="mt-6 overflow-hidden rounded-xl border border-line bg-surface">
           {personalProjects.map((p, i) => (
-            <details class="row border-t border-line-soft first:border-t-0" open={i === 0}>
+            <details class="row border-t border-line-soft first:border-t-0">
               <summary class="grid grid-cols-[34px_1fr_24px] items-start gap-4 px-5.5 py-5 transition-colors">
                 <span class="pt-0.5 font-mono text-[12.5px] text-dim">
                   {String(i + 1).padStart(2, '0')}

@@ -17,9 +17,9 @@ const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('포트폴
   <div class="mt-7.5 flex flex-wrap gap-2.5">
     <a
       href={mailtoHref}
-      class="rounded-[10px] bg-text px-5 py-3.5 text-[15px] font-semibold text-bg transition-colors hover:bg-accent hover:text-bg"
+      class="rounded-[10px] border border-text px-5 py-3.5 text-[15px] font-semibold transition-colors hover:bg-text hover:text-bg"
     >
-      {site.email}
+      Mail ↗
     </a>
     {hasResume && (
       <a
@@ -35,7 +35,7 @@ const mailtoHref = `mailto:${site.email}?subject=${encodeURIComponent('포트폴
       href={site.githubUrl}
       target="_blank"
       rel="noopener noreferrer"
-      class="rounded-[10px] border border-line-strong px-5 py-3.5 text-[15px] font-semibold transition-colors hover:border-text"
+      class="rounded-[10px] border border-text px-5 py-3.5 text-[15px] font-semibold transition-colors hover:bg-text hover:text-bg"
     >
       GitHub ↗
     </a>
