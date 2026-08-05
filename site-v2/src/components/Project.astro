@@ -9,56 +9,110 @@ const slots = [1, 2];
 <section id="project" class="scroll-mt-24 border-t border-line py-16">
   <div class="flex flex-wrap items-baseline justify-between gap-5">
     <h2 class="font-mono text-[15px] uppercase tracking-[0.14em] text-faint">Project</h2>
-    <a
-      href={site.githubUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="text-[13.5px] text-accent"
-    >
-      github.com/{site.githubHandle} ↗
-    </a>
+    {personalProjects.length > 0 ? (
+      <p class="text-[13.5px] text-muted">항목을 클릭하면 상세가 열립니다</p>
+    ) : (
+      <a
+        href={site.githubUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-[13.5px] text-accent"
+      >
+        github.com/{site.githubHandle} ↗
+      </a>
+    )}
   </div>
 
-  <div class="mt-6 grid gap-4 sm:grid-cols-2">
-    {
-      personalProjects.length > 0
-        ? personalProjects.map((p) => (
-            <article class="rounded-xl border border-line bg-surface p-6">
-              <h3 class="text-[16.5px] font-semibold tracking-[-0.01em]">{p.title}</h3>
-              <p class="mt-2 text-[14.5px] leading-[1.6] text-muted break-keep">{p.oneLine}</p>
-              <ul class="mt-4 flex flex-wrap gap-1.5">
-                {p.tech.map((t) => (
-                  <li
-                    class="rounded-md border border-line-soft bg-surface-2 px-2.5 py-1 font-mono text-xs text-muted"
-                  >
-                    {t}
-                  </li>
-                ))}
-              </ul>
-              {p.href && (
-                <a
-                  href={p.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="mt-4 inline-block font-mono text-[13px] text-accent"
-                >
-                  저장소 ↗
-                </a>
-              )}
-            </article>
-          ))
-        : slots.map((n) => (
-            <div
-              class="flex min-h-[150px] flex-col justify-between rounded-xl border border-dashed border-line-dash bg-slot px-5.5 py-6.5"
-            >
-              <p class="font-mono text-xs uppercase tracking-[0.1em] text-dim">
-                Slot {String(n).padStart(2, '0')}
-              </p>
-              <p class="font-mono text-[13px] leading-[1.6] text-faint">
-                개인 프로젝트 이름 / 한 줄 설명 / 사용 기술 / 저장소 링크
-              </p>
-            </div>
-          ))
-    }
-  </div>
+  {
+    personalProjects.length > 0 ? (
+      <>
+        <div class="mt-6 overflow-hidden rounded-xl border border-line bg-surface">
+          {personalProjects.map((p, i) => (
+            <details class="row border-t border-line-soft first:border-t-0" open={i === 0}>
+              <summary class="grid grid-cols-[34px_1fr_24px] items-start gap-4 px-5.5 py-5 transition-colors">
+                <span class="pt-0.5 font-mono text-[12.5px] text-dim">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span>
+                  <span class="block text-[16.5px] font-semibold tracking-[-0.01em] break-keep">
+                    {p.title}
+                  </span>
+                  <span class="mt-1.5 block text-[14.5px] leading-[1.55] text-muted break-keep">
+                    {p.oneLine}
+                  </span>
+                </span>
+                <span
+                  class="sign pt-px text-right font-mono text-[17px] text-faint"
+                  aria-hidden="true"
+                ></span>
+              </summary>
+
+              <div class="row-detail pb-6.5 pl-21 pr-5.5">
+                <p class="mb-4.5 font-mono text-[12.5px] text-faint">{p.meta}</p>
+                <div class="flex flex-col gap-4">
+                  {p.sections.map((s) => (
+                    <div>
+                      <p class="font-mono text-[11.5px] uppercase tracking-[0.12em] text-accent">
+                        {s.label}
+                      </p>
+                      <p class="mt-1.5 text-[15px] leading-[1.7] text-text-soft break-keep">
+                        {s.body}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                <ul class="mt-4.5 flex flex-wrap gap-1.5" aria-label="사용 기술">
+                  {p.tech.map((t) => (
+                    <li
+                      class="rounded-md border border-line-soft bg-surface-2 px-2.5 py-1 font-mono text-xs text-muted"
+                    >
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+                {p.href && (
+                  <div class="mt-4.5">
+                    <a
+                      href={p.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="font-mono text-[13px] text-accent"
+                    >
+                      저장소 ↗
+                    </a>
+                  </div>
+                )}
+              </div>
+            </details>
+          ))}
+        </div>
+
+        <p class="mt-4.5 text-[13.5px]">
+          <a
+            href={site.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-accent"
+          >
+            github.com/{site.githubHandle} ↗
+          </a>
+        </p>
+      </>
+    ) : (
+      <div class="mt-6 grid gap-4 sm:grid-cols-2">
+        {slots.map((n) => (
+          <div
+            class="flex min-h-[150px] flex-col justify-between rounded-xl border border-dashed border-line-dash bg-slot px-5.5 py-6.5"
+          >
+            <p class="font-mono text-xs uppercase tracking-[0.1em] text-dim">
+              Slot {String(n).padStart(2, '0')}
+            </p>
+            <p class="font-mono text-[13px] leading-[1.6] text-faint">
+              개인 프로젝트 이름 / 한 줄 설명 / 사용 기술 / 저장소 링크
+            </p>
+          </div>
+        ))}
+      </div>
+    )
+  }
 </section>
