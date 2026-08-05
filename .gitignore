@@ -14,6 +14,7 @@ node_modules/
 # logs / os
 npm-debug.log*
 .DS_Store
+*:Zone.Identifier
 
 # editor
 .vscode/
