@@ -7,6 +7,8 @@ export interface PersonalProject {
   sections: { label: string; body: string }[];
   tech: string[];
   href?: string;
+  /** 실제 배포된 결과물 주소 — 있으면 저장소 링크와 함께 노출된다 */
+  siteHref?: string;
 }
 
 /** 개인 프로젝트 — 채우면 자동으로 행이 렌더되고, 비어 있으면 자리표시 슬롯이 보인다. */
@@ -44,5 +46,44 @@ export const personalProjects: PersonalProject[] = [
       'MySQL',
     ],
     href: 'https://github.com/omottomo/openstack-private-cloud-iac',
+  },
+  {
+    title: 'LLM Wiki — 에이전트가 운영하는 지식 베이스',
+    oneLine:
+      'LLM이 읽은 자료가 쌓이지 않는 문제를, 사서 역할을 기계 검사로 강제하는 파이프라인으로 풀고 정적 사이트로 발행했습니다.',
+    meta: '2026.06 – 진행 중 · 개인 프로젝트 · 단독 설계·구축',
+    sections: [
+      {
+        label: '문제',
+        body:
+          'LLM에게 자료를 물어보면 매번 처음부터 요약합니다. 읽은 내용이 어디에도 남지 않아 같은 자료를 다시 읽히게 되고, 이전 답과 모순돼도 드러나지 않습니다. 대화가 아니라 누적되는 지식 베이스가 필요했습니다.',
+      },
+      {
+        label: '구성',
+        body:
+          '원문 → 위키 페이지 → 정적 사이트로 이어지는 파이프라인을 만들고, 에이전트에게 사서 역할을 부여했습니다. 원문 1건에 요약 페이지 1쪽이 대응하고, 새 자료가 기존 서술과 충돌하면 지우지 않고 양쪽을 남긴 뒤 모순으로 표시합니다. 사이트는 프레임워크 없이 파이썬 스크립트 하나로 렌더하고 Pagefind로 한글 전문 검색을 붙였습니다.',
+      },
+      {
+        label: '검증',
+        body:
+          '역할을 문서가 아니라 기계 검사로 강제했습니다. 원문↔요약 1:1 대응, 페이지 간 링크 무결성, 원문이 발행물에 새어 나가지 않았는지를 각각 검사하는 스크립트가 CI에서 돌고, 머지 전에 통과하지 못하면 룰셋이 머지를 막습니다. 골든·결함 픽스처 26종으로 검사기 자체의 퇴화도 잡습니다.',
+      },
+      {
+        label: '배포',
+        body:
+          'Terraform으로 S3 · CloudFront · ACM · Route53을 선언 관리하고, GitHub Actions에서 장기 자격증명 없이 OIDC로 역할을 맡아 배포합니다. 저장소를 공개할 때는 제3자 저작물인 원문을 히스토리 전체에서 분리해 별도 비공개 저장소로 옮겼습니다.',
+      },
+    ],
+    tech: [
+      'Python',
+      'Terraform',
+      'AWS S3',
+      'CloudFront',
+      'GitHub Actions',
+      'OIDC',
+      'Pagefind',
+    ],
+    href: 'https://github.com/omottomo/llm-wiki',
+    siteHref: 'https://omotomo-llm-wiki.com',
   },
 ];

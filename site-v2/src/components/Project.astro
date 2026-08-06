@@ -70,16 +70,28 @@ const slots = [1, 2];
                     </li>
                   ))}
                 </ul>
-                {p.href && (
-                  <div class="mt-4.5">
-                    <a
-                      href={p.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="font-mono text-[13px] text-accent"
-                    >
-                      저장소 ↗
-                    </a>
+                {(p.siteHref || p.href) && (
+                  <div class="mt-4.5 flex flex-wrap gap-4">
+                    {p.siteHref && (
+                      <a
+                        href={p.siteHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="font-mono text-[13px] text-accent"
+                      >
+                        사이트 ↗
+                      </a>
+                    )}
+                    {p.href && (
+                      <a
+                        href={p.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="font-mono text-[13px] text-accent"
+                      >
+                        저장소 ↗
+                      </a>
+                    )}
                   </div>
                 )}
               </div>
