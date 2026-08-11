@@ -48,7 +48,10 @@ const slots = [1, 2];
               </summary>
 
               <div class="row-detail pb-6.5 pl-21 pr-5.5">
-                <p class="mb-4.5 font-mono text-[12.5px] text-faint">{p.meta}</p>
+                <p
+                  class="mb-4.5 font-mono text-[12.5px] text-faint"
+                  set:html={p.meta.replace('운영 중', '<span class="text-ok">운영 중</span>')}
+                />
                 <div class="flex flex-col gap-4">
                   {p.sections.map((s) => (
                     <div>
@@ -64,7 +67,7 @@ const slots = [1, 2];
                 <ul class="mt-4.5 flex flex-wrap gap-1.5" aria-label="사용 기술">
                   {p.tech.map((t) => (
                     <li
-                      class="rounded-md border border-line-soft bg-surface-2 px-2.5 py-1 font-mono text-xs text-muted"
+                      class="rounded-full border border-line-strong bg-surface-2 px-3 py-1 font-mono text-[11.5px] tracking-[0.02em] text-text-soft"
                     >
                       {t}
                     </li>
