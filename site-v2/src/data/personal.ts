@@ -14,10 +14,10 @@ export interface PersonalProject {
 /** 개인 프로젝트 — 채우면 자동으로 행이 렌더되고, 비어 있으면 자리표시 슬롯이 보인다. */
 export const personalProjects: PersonalProject[] = [
   {
-    title: 'OpenStack Private Cloud IaC',
+    title: 'DevStack을 통한 Local Private Cloud 환경 구축',
     oneLine:
-      '물리 서버 1대에 DevStack all-in-one Private Cloud를 구축하고, VM 3대를 Terraform · cloud-init으로 선언 배포했습니다.',
-    meta: '2026.07 · 개인 프로젝트 · 단독 설계·구축',
+      'OpenStack을 학습하기 위해 DevStack을 사용하여 물리 서버 1대에 all-in-one Private Cloud를 구축하고, VM 3대를 Terraform · cloud-init을 사용해 배포하였습니다.',
+    meta: '2026.07 · 개인 프로젝트',
     sections: [
       {
         label: '구성',
@@ -48,15 +48,15 @@ export const personalProjects: PersonalProject[] = [
     href: 'https://github.com/omottomo/openstack-private-cloud-iac',
   },
   {
-    title: 'LLM Wiki — 에이전트가 운영하는 지식 베이스',
+    title: 'LLM Wiki',
     oneLine:
-      'LLM이 읽은 자료가 쌓이지 않는 문제를, 사서 역할을 기계 검사로 강제하는 파이프라인으로 풀고 정적 사이트로 발행했습니다.',
-    meta: '2026.06 – 진행 중 · 개인 프로젝트 · 단독 설계·구축',
+      '안드레이 카파시(Andrej Karpathy)의 "LLM wiki" 개념을 따라 구축한 LLM Wiki',
+    meta: '2026.06 – 운영 중 · 개인 프로젝트 · 단독 설계·구축',
     sections: [
       {
         label: '문제',
         body:
-          'LLM에게 자료를 물어보면 매번 처음부터 요약합니다. 읽은 내용이 어디에도 남지 않아 같은 자료를 다시 읽히게 되고, 이전 답과 모순돼도 드러나지 않습니다. 대화가 아니라 누적되는 지식 베이스가 필요했습니다.',
+          'AI로 인해 기술은 빠르게 발전하고, 눈 떠보면 매일 새로운 기술과 개념이 등장하고 있습니다. 새로운 기술과 개념을 공부하고 체득한 뒤 이해한 내용을 글로 기록하는 기존의 학습 방법은 아직 필수적이라 생각합니다. 다만 변화하는 시대 흐름에 맞춰 지식을 학습하고 기록하는 방식도 어느 정도 변화할 필요가 있다고 느끼고 있었습니다.',
       },
       {
         label: '구성',
